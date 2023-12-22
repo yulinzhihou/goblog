@@ -56,13 +56,7 @@ func (*ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
 		URL:    storeURL,
 		Errors: nil,
 	}
-	tmpl, err := template.ParseFiles("resources/views/articles/create.gohtml")
-	if err != nil {
-		panic(err)
-	}
-
-	err = tmpl.Execute(w, data)
-	logger.LogError(err)
+	view.Render(w, data, "articles.create")
 }
 
 // Store 文章新增
