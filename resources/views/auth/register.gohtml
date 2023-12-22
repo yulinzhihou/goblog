@@ -1,5 +1,5 @@
 {{define "title"}}
-    注册
+    用户注册
 {{end}}
 
 {{define "main"}}
@@ -17,21 +17,24 @@
                             <!-- Title -->
                             <h1 class="mb-2"> 用户注册 </h1>
                             <span class="d-block">已经有账号? <a
-                                        href="{{ RouteName2URL "auth.login" }}">点击登录</a></span>
+                                        href="">点击登录</a></span>
                         </div>
                         <!-- Form START -->
                         <form class="mt-4">
                             <!-- Email -->
                             <div class="mb-3 input-group-lg">
-                                <input type="email" class="form-control" placeholder="Enter email">
-                                <small>We'll never share your email with anyone else.</small>
+                                <input type="email" class="form-control" name="email" placeholder="请输入邮箱">
+                            </div>
+
+                            <div class="mb-3 input-group-lg">
+                                <input type="email" class="form-control" name="username" placeholder="请输入用户名">
                             </div>
                             <!-- New password -->
                             <div class="mb-3 position-relative">
                                 <!-- Input group -->
                                 <div class="input-group input-group-lg">
                                     <input class="form-control fakepassword" type="password" id="psw-input"
-                                           placeholder="Enter new password">
+                                           placeholder="输入新密码" name="password">
                                     <span class="input-group-text p-0">
                   <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
                 </span>
@@ -44,14 +47,15 @@
                                     <div class="ms-auto">
                                         <i class="bi bi-info-circle ps-1" data-bs-container="body"
                                            data-bs-toggle="popover" data-bs-placement="top"
-                                           data-bs-content="Include at least one uppercase, one lowercase, one special character, one number and 8 characters long."
+                                           data-bs-content="至少包括一个大写、一个小写、一个特殊字符、一个数字和8个字符长。"
                                            data-bs-original-title="" title=""></i>
                                     </div>
                                 </div>
                             </div>
                             <!-- Confirm password -->
                             <div class="mb-3 input-group-lg">
-                                <input class="form-control" type="password" placeholder="Confirm password">
+                                <input class="form-control" type="password" name="confirm_password"
+                                       placeholder="输入确认密码">
                             </div>
                             <!-- Keep me signed in -->
                             <div class="mb-3 text-start">
@@ -63,7 +67,8 @@
                                 <button type="submit" class="btn btn-lg btn-primary">注册账号</button>
                             </div>
                             <!-- Copyright -->
-                            <p class="mb-0 mt-3 text-center">©2022 <a target="_blank" href="https://www.webestica.com/">Webestica.</a>
+                            <p class="mb-0 mt-3 text-center">©2023 <a target="_blank"
+                                                                      href="https://yulinzhihou.com/">雨林之后.</a>
                                 All rights reserved</p>
                         </form>
                         <!-- Form END -->

@@ -1,0 +1,61 @@
+{{define "title"}}
+    用户登录
+{{end}}
+{{define "main"}}
+    <!-- **************** MAIN CONTENT START **************** -->
+    <main>
+
+        <!-- Container START -->
+        <div class="container">
+            <div class="row justify-content-center align-items-center vh-100 py-5">
+                <!-- Main content START -->
+                <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
+                    <!-- Sign in START -->
+                    <div class="card card-body text-center p-4 p-sm-5">
+                        <!-- Title -->
+                        <h1 class="mb-2">用户登录</h1>
+                        <p class="mb-0">没有账号? <a href="#"> 点击注册</a></p>
+                        <!-- Form START -->
+                        <form class="mt-sm-4">
+                            <!-- Email -->
+                            <div class="mb-3 input-group-lg">
+                                <input type="email" class="form-control" name="email" placeholder="邮箱地址">
+                            </div>
+                            <!-- New password -->
+                            <div class="mb-3 position-relative">
+                                <!-- Password -->
+                                <div class="input-group input-group-lg">
+                                    <input class="form-control fakepassword" type="password" id="psw-input" name="password" placeholder="输入密码">
+                                    <span class="input-group-text p-0">
+                                        <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Remember me -->
+                            <div class="mb-3 d-sm-flex justify-content-between">
+                                <div>
+                                    <input type="checkbox" class="form-check-input" id="rememberCheck">
+                                    <label class="form-check-label" for="rememberCheck">记住我?</label>
+                                </div>
+                                <a href="forgot-password.html">忘记密码?</a>
+                            </div>
+                            <!-- Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-lg btn-primary">登录</button>
+                            </div>
+                            <!-- Copyright -->
+                            <p class="mb-0 mt-3">©2023
+                                <a target="_blank" href="https://yulinzhihou.com/">雨林之后.</a> All rights reserved
+                            </p>
+                        </form>
+                        <!-- Form END -->
+                    </div>
+                    <!-- Sign in START -->
+                </div>
+            </div> <!-- Row END -->
+        </div>
+        <!-- Container END -->
+
+    </main>
+    <!-- **************** MAIN CONTENT END **************** -->
+{{end}}

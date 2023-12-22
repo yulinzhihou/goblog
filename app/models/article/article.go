@@ -10,18 +10,20 @@ import (
 	"strconv"
 
 	"myblog/app/models"
+	"myblog/app/models/user"
 	"myblog/pkg/route"
 )
 
 // Article 模型
 type Article struct {
 	models.BaseModel
-	Title   string
-	Image   string
-	Brief   string
-	Content string
-	Status  uint8
-	UserID  uint64
+	Title   string `gorm:"type:varchar(255);not null;default:'';comment:标题"`
+	Image   string `gorm:"type:varchar(255);not null;default:'';comment:图片"`
+	Brief   string `gorm:"type:varchar(255);not null;default:'';comment:简介"`
+	Content string `gorm:"type:longtext;comment:内容"`
+	Status  uint8  `gorm:"type:tinyint;true;not null;default:0;comment:状态0=草稿1=已发布2=未发布"`
+	UserID  uint64 `gorm:"type:bigint;not null;unsigned;comment:用户ID"`
+	User    user.User
 }
 
 // Link 方法用来生成文章链接

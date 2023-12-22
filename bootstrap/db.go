@@ -7,9 +7,13 @@
 package bootstrap
 
 import (
-	`time`
+	"time"
 
-	`myblog/pkg/model`
+	"gorm.io/gorm"
+	"myblog/app/models/article"
+	"myblog/app/models/user"
+	"myblog/pkg/logger"
+	"myblog/pkg/model"
 )
 
 // SetupDB 初始化数据库和 ORM
@@ -26,4 +30,19 @@ func SetupDB() {
 	// 设置连接的过期时间
 	sqlDB.SetConnMaxLifetime(5 * time.Minute)
 
+	// 创建和维护数据库
+	migration(db)
+}
+
+// Migration 数据库自动迁移
+func migration(db *gorm.DB) {
+	// 自动迁移
+	err := db.AutoMigrate(
+		&user.User{},
+		&article.Article{},
+	)
+	if err != nil {
+		logger.LogError(err)
+		return
+	}
 }
