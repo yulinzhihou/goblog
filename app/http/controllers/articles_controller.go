@@ -128,11 +128,13 @@ func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 	// 如果出现错误
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			w.WriteHeader(http.StatusNotFound)
-			fmt.Fprint(w, "404 文章未找到")
+			// w.WriteHeader(http.StatusNotFound)
+			// fmt.Fprint(w, "404 文章未找到")
+			view.Render(w, _article, "errors.404")
 		} else {
-			w.WriteHeader(http.StatusInternalServerError)
-			fmt.Fprint(w, "500 服务器内部错误")
+			// w.WriteHeader(http.StatusInternalServerError)
+			// fmt.Fprint(w, "500 服务器内部错误")
+			view.Render(w, _article, "errors.50x")
 		}
 	} else {
 		view.Render(w, _article, "articles.edit")

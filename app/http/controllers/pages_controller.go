@@ -35,3 +35,8 @@ func (*PagesController) NotFound(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	fmt.Fprint(w, "404")
 }
+
+// InternalServer 50x页面
+func (*PagesController) InternalServer(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "50x 页面")
+}

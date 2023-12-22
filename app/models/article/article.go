@@ -20,6 +20,7 @@ type Article struct {
 	Image   string
 	Brief   string
 	Content string
+	Status  uint8
 	UserID  uint64
 }
 
