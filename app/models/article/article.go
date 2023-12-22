@@ -6,12 +6,24 @@
 
 package article
 
+import (
+	"strconv"
+
+	"myblog/app/models"
+	"myblog/pkg/route"
+)
+
 // Article 模型
 type Article struct {
-	ID      uint64
+	models.BaseModel
 	Title   string
 	Image   string
 	Brief   string
 	Content string
 	UserID  uint64
+}
+
+// Link 方法用来生成文章链接
+func (article Article) Link() string {
+	return route.Name2URL("article.show", "id", strconv.FormatUint(article.ID, 10))
 }

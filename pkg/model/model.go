@@ -9,6 +9,8 @@ package model
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	gormlogger "gorm.io/gorm/logger"
+
 	"myblog/pkg/logger"
 )
 
@@ -26,7 +28,7 @@ func ConnectDB() *gorm.DB {
 		SkipDefaultTransaction:                   false,
 		NamingStrategy:                           nil,
 		FullSaveAssociations:                     false,
-		Logger:                                   nil,
+		Logger:                                   gormlogger.Default.LogMode(gormlogger.Info),
 		NowFunc:                                  nil,
 		DryRun:                                   false,
 		PrepareStmt:                              false,
