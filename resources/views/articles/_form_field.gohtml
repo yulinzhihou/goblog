@@ -1,0 +1,42 @@
+{{define "_form_field"}}
+    <div class="card-body">
+        <form class="row g-3" method="post" action="{{ RouteName2URL "articles.store" }}">
+            <!-- Page information -->
+            <div class="col-12">
+                <label for="title" class="form-label">文章标题 </label>
+                <input type="text" name="title" class="form-control" placeholder="文章标题 (必填)">
+            </div>
+            <!-- Display name -->
+            <div class="col-12">
+                <label for="brief" class="form-label">文章简述 </label>
+                <input type="text" name="brief" class="form-control" placeholder="文章简述 (必填)">
+            </div>
+            <!-- Category -->
+            <div class="col-12">
+                <label class="form-label">文章分类 </label>
+                <select class="form-select js-choice">
+                    <option value="PV">Comedy</option>
+                    <option value="PB">Technology</option>
+                    <option value="PV">Education</option>
+                    <option value="PV">Entertainment</option>
+                    <option value="PV">Hotel</option>
+                    <option value="PV">Travel</option>
+                </select>
+            </div>
+            <!-- Page information -->
+            <div class="col-12">
+                <label class="form-label">文章内容 </label>
+                <textarea class="form-control" rows="10"
+                          placeholder="文章内容 (必填)"></textarea>
+                <small>字数限制: 1000</small>
+            </div>
+
+            <!-- Divider -->
+            <hr>
+            <!-- Button  -->
+            <div class="col-12 text-end">
+                <button type="submit" class="btn btn-primary mb-0">保存</button>
+            </div>
+        </form>
+    </div>
+{{end}}

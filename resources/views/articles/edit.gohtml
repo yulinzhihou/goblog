@@ -4,278 +4,22 @@
 <!-- **************** MAIN CONTENT START **************** -->
 {{define "main"}}
     <main>
-
         <!-- Container START -->
         <div class="container">
             <div class="row g-4">
 
-                <!-- Sidenav START -->
-                <div class="col-lg-3">
-
-                    <!-- Advanced filter responsive toggler START -->
-                    <div class="d-flex align-items-center d-lg-none">
-                        <button class="border-0 bg-transparent" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasSideNavbar" aria-controls="offcanvasSideNavbar">
-                            <i class="btn btn-primary fw-bold fa-solid fa-sliders-h"></i>
-                            <span class="h6 mb-0 fw-bold d-lg-none ms-2">My profile</span>
-                        </button>
-                    </div>
-                    <!-- Advanced filter responsive toggler END -->
-
-                    <!-- Navbar START-->
-                    <nav class="navbar navbar-expand-lg mx-0">
-                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSideNavbar">
-                            <!-- Offcanvas header -->
-                            <div class="offcanvas-header">
-                                <button type="button" class="btn-close text-reset ms-auto" data-bs-dismiss="offcanvas"
-                                        aria-label="Close"></button>
-                            </div>
-
-                            <!-- Offcanvas body -->
-                            <div class="offcanvas-body d-block px-2 px-lg-0">
-                                <!-- Card START -->
-                                <div class="card overflow-hidden">
-                                    <!-- Cover image -->
-                                    <div class="h-50px"
-                                         style="background-image:url(assets/images/bg/01.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
-                                    <!-- Card body START -->
-                                    <div class="card-body pt-0">
-                                        <div class="text-center">
-                                            <!-- Avatar -->
-                                            <div class="avatar avatar-lg mt-n5 mb-3">
-                                                <a href="#!"><img
-                                                            class="avatar-img rounded border border-white border-3"
-                                                            src="assets/images/avatar/07.jpg" alt=""></a>
-                                            </div>
-                                            <!-- Info -->
-                                            <h5 class="mb-0"><a href="#!">Sam Lanson </a></h5>
-                                            <small>Web Developer at Webestica</small>
-                                            <p class="mt-3">I'd love to change the world, but they won’t give me the
-                                                source
-                                                code.</p>
-
-                                            <!-- User stat START -->
-                                            <div class="hstack gap-2 gap-xl-3 justify-content-center">
-                                                <!-- User stat item -->
-                                                <div>
-                                                    <h6 class="mb-0">256</h6>
-                                                    <small>Post</small>
-                                                </div>
-                                                <!-- Divider -->
-                                                <div class="vr"></div>
-                                                <!-- User stat item -->
-                                                <div>
-                                                    <h6 class="mb-0">2.5K</h6>
-                                                    <small>Followers</small>
-                                                </div>
-                                                <!-- Divider -->
-                                                <div class="vr"></div>
-                                                <!-- User stat item -->
-                                                <div>
-                                                    <h6 class="mb-0">365</h6>
-                                                    <small>Following</small>
-                                                </div>
-                                            </div>
-                                            <!-- User stat END -->
-                                        </div>
-
-                                        <!-- Divider -->
-                                        <hr>
-
-                                        <!-- Side Nav START -->
-                                        <ul class="nav nav-link-secondary flex-column fw-bold gap-2">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="my-profile.html"> <img
-                                                            class="me-2 h-20px fa-fw"
-                                                            src="assets/images/icon/home-outline-filled.svg"
-                                                            alt=""><span>Feed </span></a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="my-profile-connections.html"> <img
-                                                            class="me-2 h-20px fa-fw"
-                                                            src="assets/images/icon/person-outline-filled.svg"
-                                                            alt=""><span>Connections </span></a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="blog.html"> <img class="me-2 h-20px fa-fw"
-                                                                                           src="assets/images/icon/earth-outline-filled.svg"
-                                                                                           alt=""><span>Latest News </span></a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="events.html"> <img class="me-2 h-20px fa-fw"
-                                                                                             src="assets/images/icon/calendar-outline-filled.svg"
-                                                                                             alt=""><span>Events </span></a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="groups.html"> <img class="me-2 h-20px fa-fw"
-                                                                                             src="assets/images/icon/chat-outline-filled.svg"
-                                                                                             alt=""><span>Groups </span></a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="notifications.html"> <img
-                                                            class="me-2 h-20px fa-fw"
-                                                            src="assets/images/icon/notification-outlined-filled.svg"
-                                                            alt=""><span>Notifications </span></a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="settings.html"> <img class="me-2 h-20px fa-fw"
-                                                                                               src="assets/images/icon/cog-outline-filled.svg"
-                                                                                               alt=""><span>Settings </span></a>
-                                            </li>
-                                        </ul>
-                                        <!-- Side Nav END -->
-                                    </div>
-                                    <!-- Card body END -->
-                                    <!-- Card footer -->
-                                    <div class="card-footer text-center py-2">
-                                        <a class="btn btn-link btn-sm" href="my-profile.html">View Profile </a>
-                                    </div>
-                                </div>
-                                <!-- Card END -->
-
-                                <!-- Helper link START -->
-                                <ul class="nav small mt-4 justify-content-center lh-1">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="my-profile-about.html">About</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="settings.html">Settings</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" target="_blank" href="https://support.webestica.com/login">Support </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" target="_blank" href="docs/index.html">Docs </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="help.html">Help</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="privacy-and-terms.html">Privacy & terms</a>
-                                    </li>
-                                </ul>
-                                <!-- Helper link END -->
-                                <!-- Copyright -->
-                                <p class="small text-center mt-1">©2022 <a class="text-body" target="_blank"
-                                                                           href="https://www.webestica.com/">
-                                        Webestica </a>
-                                </p>
-                            </div>
-                        </div>
-                    </nav>
-                    <!-- Navbar END-->
-                </div>
-                <!-- Sidenav END -->
-
+                {{template "_form_slide" .}}
                 <!-- Main content START -->
                 <div class="col-md-8 col-lg-6 vstack gap-4">
                     <!-- Create a page START -->
                     <div class="card">
                         <!-- Title START -->
                         <div class="card-header border-0 pb-0">
-                            <h1 class="h4 card-title mb-0">Create a page</h1>
+                            <h1 class="h4 card-title mb-0">编辑文章</h1>
                         </div>
                         <!-- Title END -->
                         <!-- Create a page form START -->
-                        <div class="card-body">
-                            <form class="row g-3">
-                                <!-- Page information -->
-                                <div class="col-12">
-                                    <label class="form-label">Page name</label>
-                                    <input type="text" class="form-control" placeholder="Page name (Required)">
-                                    <small>Name that describes what the page is about.</small>
-                                </div>
-                                <!-- Display name -->
-                                <div class="col-sm-6 col-lg-4">
-                                    <label class="form-label">Display name</label>
-                                    <input type="text" class="form-control" placeholder="Display name (Required)">
-                                </div>
-                                <!-- Email -->
-                                <div class="col-sm-6 col-lg-4">
-                                    <label class="form-label">Email</label>
-                                    <input type="text" class="form-control" placeholder="Email (Required)">
-                                </div>
-                                <!-- Category -->
-                                <div class="col-sm-6 col-lg-4">
-                                    <label class="form-label">Category (required)</label>
-                                    <select class="form-select js-choice">
-                                        <option value="PV">Comedy</option>
-                                        <option value="PB">Technology</option>
-                                        <option value="PV">Education</option>
-                                        <option value="PV">Entertainment</option>
-                                        <option value="PV">Hotel</option>
-                                        <option value="PV">Travel</option>
-                                    </select>
-                                </div>
-                                <!-- Website URL -->
-                                <div class="col-sm-6">
-                                    <label class="form-label">Website URL</label>
-                                    <input type="text" class="form-control" placeholder="https://www.webestica.com/">
-                                </div>
-                                <!-- Phone number -->
-                                <div class="col-lg-6">
-                                    <label class="form-label">Phone number</label>
-                                    <input type="text" class="form-control" placeholder="Phone number (Required)">
-                                </div>
-                                <!-- Page information -->
-                                <div class="col-12">
-                                    <label class="form-label">About page</label>
-                                    <textarea class="form-control" rows="3"
-                                              placeholder="Description (Required)"></textarea>
-                                    <small>Character limit: 300</small>
-                                </div>
-
-                                <!-- Divider -->
-                                <hr>
-
-                                <!-- Social Links START -->
-                                <div class="col-12">
-                                    <h5 class="card-title mb-0">Social Links</h5>
-                                </div>
-                                <!-- Facebook -->
-                                <div class="col-sm-6">
-                                    <label class="form-label">Facebook</label>
-                                    <div class="input-group">
-                                    <span class="input-group-text border-0"> <i
-                                                class="bi bi-facebook text-facebook"></i> </span>
-                                        <input type="text" class="form-control" placeholder="https://www.facebook.com/">
-                                    </div>
-                                </div>
-                                <!-- Twitter -->
-                                <div class="col-sm-6">
-                                    <label class="form-label">Twitter</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text border-0"> <i
-                                                    class="bi bi-twitter text-twitter"></i> </span>
-                                        <input type="text" class="form-control" placeholder="https://www.twitter.com/">
-                                    </div>
-                                </div>
-                                <!-- Instagram -->
-                                <div class="col-sm-6">
-                                    <label class="form-label">Instagram</label>
-                                    <div class="input-group">
-                                    <span class="input-group-text border-0"> <i
-                                                class="bi bi-instagram text-instagram"></i> </span>
-                                        <input type="text" class="form-control"
-                                               placeholder="https://www.instagram.com/">
-                                    </div>
-                                </div>
-                                <!-- Pinterest -->
-                                <div class="col-sm-6">
-                                    <label class="form-label">Pinterest</label>
-                                    <div class="input-group">
-                                    <span class="input-group-text border-0"> <i
-                                                class="bi bi-pinterest text-pinterest"></i> </span>
-                                        <input type="text" class="form-control"
-                                               placeholder="https://www.pinterest.com/">
-                                    </div>
-                                </div>
-                                <!-- Button  -->
-                                <div class="col-12 text-end">
-                                    <button type="submit" class="btn btn-primary mb-0">Create a page</button>
-                                </div>
-                            </form>
-                        </div>
+                        {{template "_form_field" .}}
                         <!-- Create a page form END -->
                     </div>
                     <!-- Create a page END -->
@@ -284,7 +28,6 @@
             </div> <!-- Row END -->
         </div>
         <!-- Container END -->
-
     </main>
 {{end}}
 <!-- **************** MAIN CONTENT END **************** -->

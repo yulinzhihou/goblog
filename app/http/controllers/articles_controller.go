@@ -49,14 +49,14 @@ func (*ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 
 // Create 文章创建表单页面
 func (*ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
-	storeURL := route.Name2URL("articles.store")
-
-	data := ArticlesFormData{
-		Image:  "",
-		URL:    storeURL,
-		Errors: nil,
-	}
-	view.Render(w, data, "articles.create")
+	// storeURL := route.Name2URL("articles.store")
+	//
+	// data := ArticlesFormData{
+	// 	Image:  "",
+	// 	URL:    storeURL,
+	// 	Errors: nil,
+	// }
+	view.Render(w, ArticlesFormData{}, "articles.create", "articles._form_slide", "articles._form_field")
 }
 
 // Store 文章新增
@@ -137,7 +137,7 @@ func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 			view.Render(w, _article, "errors.50x")
 		}
 	} else {
-		view.Render(w, _article, "articles.edit")
+		view.Render(w, _article, "articles.edit", "articles._form_slide", "articles._form_field")
 	}
 }
 
