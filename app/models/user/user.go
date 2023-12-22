@@ -20,5 +20,5 @@ type User struct {
 	Desc     string `gorm:"type:json;not null;comment:用户信息"`
 	Others   string `gorm:"type:text;not null;comment:其他"`
 	Nickname string `gorm:"type:varchar(128);not null;default:'';comment:昵称"`
-	Status   uint8  `gorm:"type:tinyint(3);not null;default:1;comment:用户状态0=禁用1=正常"`
+	Status   uint8  `gorm:"type:tinyint(3) unsigned;not null;default:1;comment:用户状态0=禁用1=正常"`
 }
