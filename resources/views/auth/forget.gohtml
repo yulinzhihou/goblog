@@ -1,0 +1,74 @@
+{{define "title"}}
+    重置密码
+{{end}}
+
+{{define "main"}}
+    <!-- **************** MAIN CONTENT START **************** -->
+    <main>
+        <!-- Container START -->
+        <div class="container">
+            <div class="row justify-content-center align-items-center vh-100 py-5">
+                <!-- Main content START -->
+                <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
+                    <!-- Sign up START -->
+                    <div class="card card-body rounded-3 p-4 p-sm-5">
+                        <div class="text-center">
+                            <!-- Title -->
+                            <h1 class="mb-2"> 重置密码 </h1>
+                            <span class="d-block">已经有账号? <a href="">点击登录</a></span>
+                        </div>
+                        <!-- Form START -->
+                        <form class="mt-4">
+                            <!-- id -->
+                            <input type="hidden" name="id" value="">
+                            <!-- Email -->
+                            <div class="mb-3 input-group-lg">
+                                <input type="email" class="form-control" name="email" readonly>
+                            </div>
+
+                            <div class="mb-3 input-group-lg">
+                                <input type="email" class="form-control" name="username" readonly>
+                            </div>
+                            <!-- New password -->
+                            <div class="mb-3 position-relative">
+                                <!-- Input group -->
+                                <div class="input-group input-group-lg">
+                                    <input class="form-control fakepassword" type="password" id="psw-input" placeholder="输入新密码" name="password">
+                                    <span class="input-group-text p-0">
+                                      <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
+                                    </span>
+                                </div>
+                                <!-- Pswmeter -->
+                                <div id="pswmeter" class="mt-2"></div>
+                                <div class="d-flex mt-1">
+                                    <div id="pswmeter-message" class="rounded"></div>
+                                    <!-- Password message notification -->
+                                    <div class="ms-auto">
+                                        <i class="bi bi-info-circle ps-1" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="至少包括一个大写、一个小写、一个特殊字符、一个数字和8个字符长。"
+                                           data-bs-original-title="" title=""></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Confirm password -->
+                            <div class="mb-3 input-group-lg">
+                                <input class="form-control" type="password" name="confirm_password" placeholder="输入确认密码">
+                            </div>
+                            <!-- Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-lg btn-primary">确认修改</button>
+                            </div>
+                            <!-- Copyright -->
+                            <p class="mb-0 mt-3 text-center">©2023
+                                <a target="_blank" href="https://yulinzhihou.com/">雨林之后.</a> All rights reserved</p>
+                        </form>
+                        <!-- Form END -->
+                    </div>
+                    <!-- Sign up END -->
+                </div>
+            </div> <!-- Row END -->
+        </div>
+        <!-- Container END -->
+
+    </main>
+    <!-- **************** MAIN CONTENT END **************** -->
+{{end}}
