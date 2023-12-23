@@ -7,15 +7,23 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
-	"myblog/app/models/user"
+	`myblog/app/models/user`
+	`myblog/app/requests`
 	"myblog/pkg/view"
 )
 
 // AuthController 用户认证类，注册登录，退出
 type AuthController struct {
+}
+
+// 用户表单验证
+type userForm struct {
+	Username        string `valid:"name"`
+	Password        string `valid:"password"`
+	Email           string `valid:"email"`
+	PasswordConfirm string `valid:"password_confirm"`
 }
 
 // Register 用户注册页面
@@ -26,28 +34,44 @@ func (*AuthController) Register(w http.ResponseWriter, r *http.Request) {
 // DoRegister 用户注册处理逻辑
 func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 	// 初始化变量
-	username := r.PostFormValue("username")
-	password := r.PostFormValue("password")
-	email := r.PostFormValue("email")
-
-	// 表单验证，。
 	_user := user.User{
-		Username: username,
-		Password: password,
-		Email:    email,
+		Username:        r.PostFormValue("username"),
+		Email:           r.PostFormValue("email"),
+		Password:        r.PostFormValue("password"),
+		PasswordConfirm: r.PostFormValue("password_confirm"),
 	}
 
-	_user.Create()
+	// 开始验证
+	errs := requests.ValidateRegistrationForm(_user)
 
-	if _user.ID > 0 {
-		fmt.Fprint(w, "创建成功，ID "+_user.GetStringID())
-	} else {
+	if len(errs) > 0 {
+		// 表单验证不成功
 		view.RenderSimple(w, view.D{
-			"Message": "创建用户失败，请联系管理员",
-		}, "errors.50x")
-	}
+			"Errors": errs,
+			"User":   _user,
+		}, "auth.register")
+	} else {
+		err := _user.Create()
 
-	// 表单验证不成功
+		if err != nil {
+			if _user.ID > 0 {
+				view.RenderSimple(w, view.D{
+					"Errors": errs,
+					"User":   _user,
+				}, "auth.login")
+			} else {
+				view.RenderSimple(w, view.D{
+					"Message": "创建用户失败，请联系管理员",
+					"Errors":  errs,
+					"User":    _user,
+				}, "errors.50x")
+			}
+		} else {
+			view.RenderSimple(w, view.D{
+				"Message": err,
+			}, "errors.50x")
+		}
+	}
 }
 
 // Login 用户登录

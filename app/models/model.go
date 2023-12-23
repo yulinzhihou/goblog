@@ -15,8 +15,8 @@ import (
 // BaseModel 模型基类
 type BaseModel struct {
 	ID        uint64    `gorm:"primaryKey;comment:ID"`
-	CreatedAt time.Time `gorm:"autoCreateTime;comment:创建时间"`
-	UpdatedAt time.Time `gorm:"autoUpdateTime;comment:更新时间"`
+	CreatedAt time.Time `gorm:"autoCreateTime:milli;comment:创建时间"`
+	UpdatedAt time.Time `gorm:"autoUpdateTime:milli;comment:更新时间"`
 }
 
 // GetStringID 获取 ID 的字符串格式

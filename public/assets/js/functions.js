@@ -667,11 +667,11 @@ var e = {
                 showMessage: true,
                 messageContainer: '#pswmeter-message',
                 messagesList: [
-                    'Write your password...',
-                    'Easy peasy!',
-                    'That is a simple one',
-                    'That is better',
-                    'Yeah! that password rocks ;)'
+                    '请输入你的密码...',
+                    '密码太弱!',
+                    '密码太简单',
+                    '密码一般',
+                    '密码安全性很强 :)'
                 ],
                 height: 8,
                 borderRadius: 4,
