@@ -26,22 +26,14 @@
                                 <input type="email" class="form-control {{if .Errors.email }} is-invalid {{end}}" name="email" placeholder="请输入邮箱" value="{{ .User.Email }}">
                             </div>
                             {{ with .Errors.email}}
-                                <div class="invalid-feedback" style="display: block">
-                                    {{ range $message := . }}
-                                        <p>{{ $message }}</p>
-                                    {{end}}
-                                </div>
+                                {{template "invalid-feedback" .}}
                             {{end}}
 
                             <div class="mb-3 input-group-lg">
                                 <input type="text" class="form-control {{if .Errors.username }} is-invalid {{end}}" name="username" placeholder="请输入用户名" value="{{ .User.Username }}">
                             </div>
                             {{ with .Errors.username}}
-                                <div class="invalid-feedback" style="display: block">
-                                    {{ range $message := . }}
-                                        <p>{{ $message }}</p>
-                                    {{end}}
-                                </div>
+                                {{template "invalid-feedback" .}}
                             {{end}}
 
                             <!-- New password -->
@@ -54,11 +46,7 @@
                                     </span>
                                 </div>
                                 {{ with .Errors.password}}
-                                    <div class="invalid-feedback" style="display: block">
-                                        {{ range $message := . }}
-                                            <p>{{ $message }}</p>
-                                        {{end}}
-                                    </div>
+                                    {{template "invalid-feedback" .}}
                                 {{end}}
                                 <!-- Pswmeter -->
                                 <div id="pswmeter" class="mt-2"></div>
@@ -78,11 +66,7 @@
                                 <input class="form-control {{if .Errors.password_confirm }} is-invalid {{end}}" type="password" name="password_confirm" placeholder="输入确认密码" value="{{ .User.PasswordConfirm }}">
                             </div>
                             {{ with .Errors.password_confirm}}
-                                <div class="invalid-feedback" style="display: block">
-                                    {{ range $message := . }}
-                                        <p>{{ $message }}</p>
-                                    {{end}}
-                                </div>
+                                {{template "invalid-feedback" .}}
                             {{end}}
                             <!-- Button -->
                             <div class="d-grid">

@@ -68,8 +68,9 @@ func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			view.RenderSimple(w, view.D{
-				"Message": err,
-			}, "errors.50x")
+				"Errors": errs,
+				"User":   _user,
+			}, "auth.login")
 		}
 	}
 }

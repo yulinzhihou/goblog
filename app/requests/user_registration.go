@@ -15,8 +15,8 @@ import (
 func ValidateRegistrationForm(data user.User) map[string][]string {
 	// 定制誰规则
 	rules := govalidator.MapData{
-		"username":         []string{"required", "alpha_num", "between:3,30"},
-		"email":            []string{"required", "min:4", "email"},
+		"username":         []string{"required", "alpha_num", "between:3,30","not_exists:users,username"},
+		"email":            []string{"required", "min:4", "email","not_exists:users,email"},
 		"password":         []string{"required", "min:4", "max:30"},
 		"password_confirm": []string{"required"},
 	}
@@ -27,11 +27,13 @@ func ValidateRegistrationForm(data user.User) map[string][]string {
 			"required:用户名必填项",
 			"alpha_num:用户名格式错误，只允许数字和字母",
 			"between:用户名的长度需介于 3-30 之间",
+			"not_exists:用户名已经存在",
 		},
 		"email": []string{
 			"required:邮箱必填项",
 			"min:邮箱长度不能低于 4 位",
 			"email:邮箱格式不对",
+			"not_exists:邮箱已经存在",
 		},
 		"password": []string{
 			"required:密码为必填项",

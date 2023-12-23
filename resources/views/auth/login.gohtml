@@ -14,18 +14,18 @@
                     <div class="card card-body text-center p-4 p-sm-5">
                         <!-- Title -->
                         <h1 class="mb-2">用户登录</h1>
-                        <p class="mb-0">没有账号? <a href="#"> 点击注册</a></p>
+                        <p class="mb-0">没有账号? <a href="{{ RouteName2URL "auth.register" }}"> 点击注册</a></p>
                         <!-- Form START -->
-                        <form class="mt-sm-4">
+                        <form class="mt-sm-4" method="post" action="{{ RouteName2URL "auth.dologin" }}">
                             <!-- Email -->
                             <div class="mb-3 input-group-lg">
-                                <input type="email" class="form-control" name="email" placeholder="邮箱地址">
+                                <input type="email" class="form-control" name="email" placeholder="邮箱地址" value="">
                             </div>
                             <!-- New password -->
                             <div class="mb-3 position-relative">
                                 <!-- Password -->
                                 <div class="input-group input-group-lg">
-                                    <input class="form-control fakepassword" type="password" id="psw-input" name="password" placeholder="输入密码">
+                                    <input class="form-control fakepassword" type="password" id="psw-input" name="password" placeholder="输入密码" value="">
                                     <span class="input-group-text p-0">
                                         <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
                                     </span>
