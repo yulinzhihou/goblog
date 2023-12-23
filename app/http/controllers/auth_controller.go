@@ -7,8 +7,10 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
+	"myblog/app/models/user"
 	"myblog/pkg/view"
 )
 
@@ -23,7 +25,29 @@ func (*AuthController) Register(w http.ResponseWriter, r *http.Request) {
 
 // DoRegister 用户注册处理逻辑
 func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
-	//
+	// 初始化变量
+	username := r.PostFormValue("username")
+	password := r.PostFormValue("password")
+	email := r.PostFormValue("email")
+
+	// 表单验证，。
+	_user := user.User{
+		Username: username,
+		Password: password,
+		Email:    email,
+	}
+
+	_user.Create()
+
+	if _user.ID > 0 {
+		fmt.Fprint(w, "创建成功，ID "+_user.GetStringID())
+	} else {
+		view.RenderSimple(w, view.D{
+			"Message": "创建用户失败，请联系管理员",
+		}, "errors.50x")
+	}
+
+	// 表单验证不成功
 }
 
 // Login 用户登录

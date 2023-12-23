@@ -20,14 +20,14 @@
                                         href="">点击登录</a></span>
                         </div>
                         <!-- Form START -->
-                        <form class="mt-4">
+                        <form class="mt-4" method="post" action="{{ RouteName2URL "auth.doregister" }}">
                             <!-- Email -->
                             <div class="mb-3 input-group-lg">
                                 <input type="email" class="form-control" name="email" placeholder="请输入邮箱">
                             </div>
 
                             <div class="mb-3 input-group-lg">
-                                <input type="email" class="form-control" name="username" placeholder="请输入用户名">
+                                <input type="text" class="form-control" name="username" placeholder="请输入用户名">
                             </div>
                             <!-- New password -->
                             <div class="mb-3 position-relative">
@@ -56,11 +56,6 @@
                             <div class="mb-3 input-group-lg">
                                 <input class="form-control" type="password" name="confirm_password"
                                        placeholder="输入确认密码">
-                            </div>
-                            <!-- Keep me signed in -->
-                            <div class="mb-3 text-start">
-                                <input type="checkbox" class="form-check-input" id="keepsingnedCheck">
-                                <label class="form-check-label" for="keepsingnedCheck"> 保持登录</label>
                             </div>
                             <!-- Button -->
                             <div class="d-grid">

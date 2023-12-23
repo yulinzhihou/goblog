@@ -1,5 +1,5 @@
 {{define "title"}}
-    404 页面未找到
+    服务器出错了
 {{end}}
 
 {{define "main"}}
@@ -453,9 +453,17 @@
                         <!-- SVG END -->
                     </figure>
                     <!-- 50x info -->
-                    <h1 class="display-1 mt-4">50x</h1>
-                    <h2 class="mb-2 h1">服务器内部错误，如有需要，请联系我们！</h2>
+                    <h1 class="display-1 mt-4">500</h1>
+                    {{if .Message}}
+                        <h5 class="mb-2 h5">{{ .Message }}</h5>
+                    {{else}}
+                        <h5 class="mb-2 h5">服务器内部错误，如有需要，请联系我们！</h5>
+                    {{end}}
+                    <a class="btn btn-danger-soft btn-sm" href="mailto:yulinzhihou@163.com">点击发送邮件：yulinzhihou@163.com</a>
                     <p>你访问的数据已经离开地球，跑到其他星球上去了</p>
+                    <!-- Button -->
+                    <a class="btn btn-primary-soft btn-sm" href="javascript:history.go(-1)">返回</a>
+                    <a class="btn btn-danger-soft btn-sm" href="{{ RouteName2URL "home" }}">回到首页</a>
                 </div>
                 <!-- Offline START -->
             </div>
@@ -464,7 +472,5 @@
         <!-- Container END -->
 
     </main>
-    <!-- **************** MAIN CONTENT END **************** -->
-
     <!-- **************** MAIN CONTENT END **************** -->
 {{end}}
