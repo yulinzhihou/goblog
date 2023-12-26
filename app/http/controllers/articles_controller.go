@@ -43,7 +43,9 @@ func (*ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprint(w, "500 服务器内部错误")
 	} else {
-		view.Render(w, _articles, "articles.index")
+		view.Render(w, view.D{
+			"Articles": _articles,
+		}, "articles.index")
 	}
 }
 
@@ -56,7 +58,9 @@ func (*ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
 	// 	URL:    storeURL,
 	// 	Errors: nil,
 	// }
-	view.Render(w, ArticlesFormData{}, "articles.create", "articles._form_slide", "articles._form_field")
+	view.Render(w, view.D{
+		"Articles": nil,
+	}, "articles.create", "articles._form_slide", "articles._form_field")
 }
 
 // Store 文章新增
@@ -114,7 +118,9 @@ func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		// 读取成功。
-		view.Render(w, _article, "articles.show")
+		view.Render(w, view.D{
+			"Articles": _article,
+		}, "articles.show")
 	}
 }
 
@@ -130,14 +136,20 @@ func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 		if err == gorm.ErrRecordNotFound {
 			// w.WriteHeader(http.StatusNotFound)
 			// fmt.Fprint(w, "404 文章未找到")
-			view.Render(w, _article, "errors.404")
+			view.Render(w, view.D{
+				"Articles": _article,
+			}, "errors.404")
 		} else {
 			// w.WriteHeader(http.StatusInternalServerError)
 			// fmt.Fprint(w, "500 服务器内部错误")
-			view.Render(w, _article, "errors.50x")
+			view.Render(w, view.D{
+				"Articles": _article,
+			}, "errors.50x")
 		}
 	} else {
-		view.Render(w, _article, "articles.edit", "articles._form_slide", "articles._form_field")
+		view.Render(w, view.D{
+			"Articles": _article,
+		}, "articles.edit", "articles._form_slide", "articles._form_field")
 	}
 }
 
@@ -190,7 +202,9 @@ func (*ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 				URL:     updateURL,
 				Errors:  errors,
 			}
-			view.Render(w, data, "articles.edit")
+			view.Render(w, view.D{
+				"Articles": data,
+			}, "articles.edit")
 		}
 	}
 }
