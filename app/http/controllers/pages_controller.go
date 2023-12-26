@@ -7,8 +7,9 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
+
+	"myblog/pkg/view"
 )
 
 // PagesController 处理静态页面
@@ -17,26 +18,26 @@ type PagesController struct {
 
 // Home 首页
 func (*PagesController) Home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "首页首页首页")
+	view.Render(w, view.D{}, "index.index")
 }
 
 // About 关于页
 func (*PagesController) About(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "关于页")
+	view.Render(w, view.D{}, "about.index")
 }
 
 // Help 帮助页
 func (*PagesController) Help(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "帮助页")
+	view.Render(w, view.D{}, "help.index")
 }
 
 // NotFound 404页面
 func (*PagesController) NotFound(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
-	fmt.Fprint(w, "404")
+	view.Render(w, view.D{}, "error.404")
 }
 
 // InternalServer 50x页面
 func (*PagesController) InternalServer(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "50x 页面")
+	view.Render(w, view.D{}, "errors.50x")
 }

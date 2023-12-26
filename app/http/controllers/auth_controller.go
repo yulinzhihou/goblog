@@ -91,8 +91,8 @@ func (*AuthController) DoLogin(w http.ResponseWriter, r *http.Request) {
 	email := r.PostFormValue("email")
 	password := r.PostFormValue("password")
 
-	if err := auth.Attempt(email, password); err != nil {
-		fmt.Print(err)
+	if err := auth.Attempt(email, password); err == nil {
+		fmt.Println(err)
 		// 登录成功。
 		http.Redirect(w, r, "/", http.StatusFound)
 	} else {

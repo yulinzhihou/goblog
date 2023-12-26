@@ -58,7 +58,7 @@ func getTemplateFiles(tplFiles ...string) []string {
 	}
 
 	// 所有布局模板文件 Slice
-	layoutFiles, err := filepath.Glob(viewDir + "layout/*.gohtml")
+	layoutFiles, err := filepath.Glob(viewDir + "layouts/*.gohtml")
 	logger.LogError(err)
 
 	// 合并所有文件
