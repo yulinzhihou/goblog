@@ -126,5 +126,6 @@ func (*AuthController) DoSendEmail(w http.ResponseWriter, r *http.Request) {
 
 // Logout 退出系统逻辑
 func (*AuthController) Logout(w http.ResponseWriter, r *http.Request) {
-
+	auth.Logout()
+	http.Redirect(w, r, "/", http.StatusFound)
 }

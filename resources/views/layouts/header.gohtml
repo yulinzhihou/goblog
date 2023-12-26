@@ -138,7 +138,6 @@
                     </ul>
                 </div>
                 <!-- Main navbar END -->
-
                 <!-- Nav right START -->
                 <ul class="nav flex-nowrap align-items-center ms-sm-3 list-unstyled">
                     <li class="nav-item ms-2">
@@ -242,7 +241,7 @@
                     {{if .isLogined }}
                         <li class="nav-item ms-2 dropdown">
                             <a class="nav-link btn icon-md p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img class="avatar-img rounded-2" src="/assets/images/avatar/07.jpg" alt="">
+                                <img class="avatar-img rounded-2" src="assets/images/avatar/07.jpg" alt="">
                             </a>
                             <ul class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3" aria-labelledby="profileDropdown">
                                 <!-- Profile info -->
@@ -250,7 +249,7 @@
                                     <div class="d-flex align-items-center position-relative">
                                         <!-- Avatar -->
                                         <div class="avatar me-3">
-                                            <img class="avatar-img rounded-circle" src="/assets/images/avatar/07.jpg" alt="avatar">
+                                            <img class="avatar-img rounded-circle" src="assets/images/avatar/07.jpg" alt="avatar">
                                         </div>
                                         <div>
                                             <a class="h6 stretched-link" href="#">Lori Ferguson</a>
@@ -274,8 +273,9 @@
                                     </a>
                                 </li>
                                 <li class="dropdown-divider"></li>
+                                <form id="logout" method="post" action="{{ RouteName2URL "auth.logout" }}"></form>
                                 <li>
-                                    <a class="dropdown-item bg-danger-soft-hover" href="{{ RouteName2URL "auth.logout" }}"><i class="bi bi-power fa-fw me-2"></i>退出</a>
+                                    <a class="dropdown-item bg-danger-soft-hover" href="#" onclick="document.getElementById('logout').submit();return false;"><i class="bi bi-power fa-fw me-2"></i>退出</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
@@ -289,24 +289,37 @@
                     {{else}}
                         <li class="nav-item ms-2 dropdown">
                             <a class="nav-link btn icon-md p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img class="avatar-img rounded-2" src="/assets/images/avatar/07.jpg" alt="">
+                                <img class="avatar-img rounded-2" src="assets/images/avatar/07.jpg" alt="">
                             </a>
+                            <ul class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3" aria-labelledby="profileDropdown">
+                                <!-- Profile info -->
+                                <li class="px-3">
+                                    <div class="d-flex align-items-center position-relative">
+                                        <!-- Avatar -->
+                                        <div class="avatar me-3">
+                                            <img class="avatar-img rounded-circle" src="assets/images/avatar/07.jpg" alt="avatar">
+                                        </div>
+                                        <div>
+                                            <a class="h6 stretched-link" href="#">Lori Ferguson</a>
+                                            <p class="small m-0">Web Developer</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item bg-danger-soft-hover" href="{{ RouteName2URL "auth.register" }}"><i class="bi bi-power fa-fw me-2"></i>注册</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item bg-danger-soft-hover" href="{{ RouteName2URL "auth.login" }}"><i class="bi bi-gear fa-fw me-2"></i>登录</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <!-- Dark mode options START -->
+                                {{template "dark_model" .}}
+                                <!-- Dark mode options END-->
+                            </ul>
                         </li>
-                        <ul class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3" aria-labelledby="profileDropdown">
-                            <li class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item bg-danger-soft-hover" href="{{ RouteName2URL "auth.register" }}"><i class="bi bi-power fa-fw me-2"></i>注册</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item bg-danger-soft-hover" href="{{ RouteName2URL "auth.login" }}"><i class="bi bi-power fa-fw me-2"></i>登录</a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <!-- Dark mode options START -->
-                            {{template "dark_model" .}}
-                            <!-- Dark mode options END-->
-                        </ul>
                     {{end}}
                 </ul>
                 <!-- Nav right END -->

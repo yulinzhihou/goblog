@@ -34,7 +34,7 @@ func (*PagesController) Help(w http.ResponseWriter, r *http.Request) {
 // NotFound 404页面
 func (*PagesController) NotFound(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
-	view.Render(w, view.D{}, "error.404")
+	view.Render(w, view.D{}, "errors.404")
 }
 
 // InternalServer 50x页面
