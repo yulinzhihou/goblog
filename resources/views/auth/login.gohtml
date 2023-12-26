@@ -19,13 +19,23 @@
                         <form class="mt-sm-4" method="post" action="{{ RouteName2URL "auth.dologin" }}">
                             <!-- Email -->
                             <div class="mb-3 input-group-lg">
-                                <input type="email" class="form-control" name="email" placeholder="邮箱地址" value="">
+                                <input type="email" class="form-control" name="email" placeholder="邮箱地址" value="{{ .Email }}">
+                                {{ with .Error }}
+                                    <div class="invalid-feedback" style="display: block;">
+                                        <p>{{ . }}</p>
+                                    </div>
+                                {{end}}
                             </div>
                             <!-- New password -->
                             <div class="mb-3 position-relative">
                                 <!-- Password -->
                                 <div class="input-group input-group-lg">
-                                    <input class="form-control fakepassword" type="password" id="psw-input" name="password" placeholder="输入密码" value="">
+                                    <input class="form-control fakepassword" type="password" id="psw-input" name="password" placeholder="输入密码" value="{{ .Password}}">
+                                    {{ with .Error }}
+                                        <div class="invalid-feedback" style="display: block;">
+                                            <p>{{ . }}</p>
+                                        </div>
+                                    {{end}}
                                     <span class="input-group-text p-0">
                                         <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
                                     </span>
@@ -45,7 +55,7 @@
                             </div>
                             <!-- Copyright -->
                             <p class="mb-0 mt-3">©2023
-                                <a target="_blank" href="https://yulinzhihou.com/">雨林之后.</a> All rights reserved
+                                <a target="_blank" href="https://yulinzhihou.com">雨林之后.</a> All rights reserved
                             </p>
                         </form>
                         <!-- Form END -->

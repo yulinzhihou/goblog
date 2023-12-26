@@ -11,6 +11,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"myblog/app/http/controllers"
+	"myblog/app/http/middlewares"
 )
 
 // RegisterWebRoutes 注册网页相关路由
@@ -49,5 +50,5 @@ func RegisterWebRoutes(r *mux.Router) {
 	r.PathPrefix("/assets/").Handler(http.FileServer(http.Dir("./public")))
 
 	// 使用中间件
-	// r.Use(middlewares.ForceHTML)
+	r.Use(middlewares.StartSession)
 }

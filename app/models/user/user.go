@@ -24,3 +24,8 @@ type User struct {
 	// gorm  -  设置，表示 GORM 在读写过程中忽略些字段
 	PasswordConfirm string `gorm:"-" valid:"password_confirm"`
 }
+
+// ComparePassword 对比密码是否匹配
+func (user *User) ComparePassword(password string) bool {
+	return user.Password == password
+}

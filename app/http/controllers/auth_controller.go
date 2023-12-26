@@ -7,10 +7,13 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
-	`myblog/app/models/user`
-	`myblog/app/requests`
+	"myblog/app/models/user"
+	"myblog/app/requests"
+	"myblog/pkg/auth"
+	"myblog/pkg/route"
 	"myblog/pkg/view"
 )
 
@@ -28,7 +31,9 @@ type userForm struct {
 
 // Register 用户注册页面
 func (*AuthController) Register(w http.ResponseWriter, r *http.Request) {
-	view.RenderSimple(w, view.D{}, "auth.register")
+	view.RenderSimple(w, view.D{
+		"User": user.User{},
+	}, "auth.register")
 }
 
 // DoRegister 用户注册处理逻辑
@@ -55,10 +60,7 @@ func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil {
 			if _user.ID > 0 {
-				view.RenderSimple(w, view.D{
-					"Errors": errs,
-					"User":   _user,
-				}, "auth.login")
+				http.Redirect(w, r, route.Name2URL("auth.login"), http.StatusFound)
 			} else {
 				view.RenderSimple(w, view.D{
 					"Message": "创建用户失败，请联系管理员",
@@ -77,12 +79,29 @@ func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 
 // Login 用户登录
 func (*AuthController) Login(w http.ResponseWriter, r *http.Request) {
-	view.RenderSimple(w, view.D{}, "auth.login")
+	view.RenderSimple(w, view.D{
+		"User":   user.User{},
+		"Errors": nil,
+	}, "auth.login")
 }
 
 // DoLogin 登录的业务逻辑
 func (*AuthController) DoLogin(w http.ResponseWriter, r *http.Request) {
-	//
+	// 初始化表单
+	email := r.PostFormValue("email")
+	password := r.PostFormValue("password")
+
+	if err := auth.Attempt(email, password); err != nil {
+		fmt.Print(err)
+		// 登录成功。
+		http.Redirect(w, r, "/", http.StatusFound)
+	} else {
+		view.RenderSimple(w, view.D{
+			"Error":    err,
+			"Email":    email,
+			"Password": password,
+		}, "auth.login")
+	}
 }
 
 // Forget 忘记密码
