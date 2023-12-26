@@ -60,6 +60,7 @@ func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil {
 			if _user.ID > 0 {
+				auth.Login(_user)
 				http.Redirect(w, r, route.Name2URL("auth.login"), http.StatusFound)
 			} else {
 				view.RenderSimple(w, view.D{

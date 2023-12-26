@@ -44,10 +44,10 @@
                             <!-- Remember me -->
                             <div class="mb-3 d-sm-flex justify-content-between">
                                 <div>
-                                    <input type="checkbox" class="form-check-input" id="rememberCheck">
+                                    <input type="checkbox" class="form-check-input" id="rememberCheck" name="remember_me">
                                     <label class="form-check-label" for="rememberCheck">记住我?</label>
                                 </div>
-                                <a href="forgot-password.html">忘记密码?</a>
+                                <a href="{{ RouteName2URL "auth.forget"}}">忘记密码?</a>
                             </div>
                             <!-- Button -->
                             <div class="d-grid">

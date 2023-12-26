@@ -17,7 +17,7 @@
                             <!-- Title -->
                             <h1 class="mb-2"> 用户注册 </h1>
                             <span class="d-block">已经有账号? <a
-                                        href="">点击登录</a></span>
+                                        href="{{ RouteName2URL "auth.login" }}">点击登录</a></span>
                         </div>
                         <!-- Form START -->
                         <form class="mt-4" method="post" action="{{ RouteName2URL "auth.doregister" }}" class="needs-validation" novalidate>
