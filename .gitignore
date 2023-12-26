@@ -16,4 +16,5 @@ tmp/
 *.sh
 !README.md
 !LICENSE
+*.mp4
 
