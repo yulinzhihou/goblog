@@ -48,3 +48,13 @@ func GetByUsername(username string) (User, error) {
 	}
 	return user, nil
 }
+
+// Update 修改用户数据
+func (user *User) Update() (rowsAffected int64, err error) {
+	result := model.DB.Save(&user)
+	if err = result.Error; err != nil {
+		logger.LogError(err)
+		return 0, err
+	}
+	return result.RowsAffected, nil
+}

@@ -18,16 +18,16 @@
                             <span class="d-block">已经有账号? <a href="">点击登录</a></span>
                         </div>
                         <!-- Form START -->
-                        <form class="mt-4">
+                        <form class="mt-4" method="post" action="{{ RouteName2URL "auth.resetpassword"}}">
                             <!-- id -->
-                            <input type="hidden" name="id" value="">
+                            <input type="hidden" name="id" value="{{ .User.ID }}">
                             <!-- Email -->
                             <div class="mb-3 input-group-lg">
-                                <input type="email" class="form-control" name="email" readonly>
+                                <input type="email" class="form-control" name="email" disabled value="{{ .User.Username }}">
                             </div>
 
                             <div class="mb-3 input-group-lg">
-                                <input type="email" class="form-control" name="username" readonly>
+                                <input type="email" class="form-control" name="username" disabled value="{{ .User.Email }}">
                             </div>
                             <!-- New password -->
                             <div class="mb-3 position-relative">
