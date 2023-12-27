@@ -19,7 +19,7 @@
                             <span class="d-block">已经有账号? <a href="{{ RouteName2URL "auth.login" }}">点击登录</a></span>
                         </div>
                         <!-- Form START -->
-                        <form class="mt-4" method="post" action="{{ RouteName2URL "auth.doregister" }}" class="needs-validation" novalidate>
+                        <form class="mt-4" method="post" action="{{ RouteName2URL "auth.do_register" }}" class="needs-validation" novalidate>
                             <!-- Email -->
                             <div class="mb-3 input-group-lg">
                                 <input type="email" class="form-control {{if .Errors.email }} is-invalid {{end}}" name="email" placeholder="请输入邮箱" value="{{ .User.Email }}">

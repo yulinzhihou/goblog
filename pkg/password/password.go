@@ -14,7 +14,7 @@ import (
 // Hash 使用 bcrypt 对密码进行加密
 func Hash(password string) string {
 	// GenerateFromPassword 的第二个参数是 Cost 值。建议大于 12，数值越大，耗费时间越长
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 18)
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	logger.LogError(err)
 
 	return string(bytes)

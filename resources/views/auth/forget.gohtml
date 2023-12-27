@@ -18,7 +18,7 @@
                             <span class="d-block">已经有账号? <a href="">点击登录</a></span>
                         </div>
                         <!-- Form START -->
-                        <form class="mt-4" method="post" action="{{ RouteName2URL "auth.resetpassword" }}">
+                        <form class="mt-4" method="post" action="{{ RouteName2URL "auth.reset" }}">
                             <!-- id -->
                             <input type="hidden" name="id" value="{{ .User.ID }}">
                             <!-- Email -->

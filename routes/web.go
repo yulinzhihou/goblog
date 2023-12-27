@@ -1,6 +1,6 @@
 // routes
 // Author : Yulinzhihou
-// Github : https://github.com/yulinzhihou
+// GitHub : https://github.com/yulinzhihou
 // WebSite: yulinzhihou.com
 // Date   : 2023/12/21
 
@@ -27,24 +27,24 @@ func RegisterWebRoutes(r *mux.Router) {
 	ac := new(controllers.ArticlesController)
 
 	r.HandleFunc("/articles", ac.Index).Methods("GET").Name("articles.index")
-	r.HandleFunc("/articles/create", ac.Create).Methods("GET").Name("articles.create")
-	r.HandleFunc("/articles", ac.Store).Methods("POST").Name("articles.store")
+	r.HandleFunc("/articles/create", middlewares.Auth(ac.Create)).Methods("GET").Name("articles.create")
+	r.HandleFunc("/articles", middlewares.Auth(ac.Store)).Methods("POST").Name("articles.store")
 	r.HandleFunc("/articles/{id:[0-9]+}", ac.Show).Methods("GET").Name("articles.show")
-	r.HandleFunc("/articles/{id:[0-9]+}", ac.Update).Methods("POST").Name("articles.update")
-	r.HandleFunc("/articles/{id:[0-9]+}/edit", ac.Edit).Methods("GET").Name("articles.edit")
-	r.HandleFunc("/articles/{id:[0-9]+}/delete", ac.Delete).Methods("POST").Name("articles.delete")
+	r.HandleFunc("/articles/{id:[0-9]+}", middlewares.Auth(ac.Update)).Methods("POST").Name("articles.update")
+	r.HandleFunc("/articles/{id:[0-9]+}/edit", middlewares.Auth(ac.Edit)).Methods("GET").Name("articles.edit")
+	r.HandleFunc("/articles/{id:[0-9]+}/delete", middlewares.Auth(ac.Delete)).Methods("POST").Name("articles.delete")
 
 	// 注册登录相送
 	auc := new(controllers.AuthController)
-	r.HandleFunc("/auth/register", auc.Register).Methods("GET").Name("auth.register")
-	r.HandleFunc("/auth/doregister", auc.DoRegister).Methods("POST").Name("auth.doregister")
-	r.HandleFunc("/auth/login", auc.Login).Methods("GET").Name("auth.login")
-	r.HandleFunc("/auth/dologin", auc.DoLogin).Methods("POST").Name("auth.dologin")
-	r.HandleFunc("/auth/forget", auc.Forget).Methods("GET").Name("auth.forget")
-	r.HandleFunc("/auth/resetpassword", auc.ResetPassword).Methods("POST").Name("auth.resetpassword")
-	r.HandleFunc("/auth/send_email", auc.SendEmail).Methods("GET").Name("auth.send_email")
-	r.HandleFunc("/auth/dosend", auc.DoSendEmail).Methods("POST").Name("auth.dosendemail")
-	r.HandleFunc("/auth/logout", auc.Logout).Methods("POST").Name("auth.logout")
+	r.HandleFunc("/auth/register", middlewares.Guest(auc.Register)).Methods("GET").Name("auth.register")
+	r.HandleFunc("/auth/do_register", middlewares.Guest(auc.DoRegister)).Methods("POST").Name("auth.do_register")
+	r.HandleFunc("/auth/login", middlewares.Guest(auc.Login)).Methods("GET").Name("auth.login")
+	r.HandleFunc("/auth/do_login", middlewares.Guest(auc.DoLogin)).Methods("POST").Name("auth.do_login")
+	r.HandleFunc("/auth/forget", middlewares.Guest(auc.Forget)).Methods("GET").Name("auth.forget")
+	r.HandleFunc("/auth/reset", middlewares.Guest(auc.ResetPassword)).Methods("POST").Name("auth.reset")
+	r.HandleFunc("/auth/send_email", middlewares.Guest(auc.SendEmail)).Methods("GET").Name("auth.send_email")
+	r.HandleFunc("/auth/do_send_email", middlewares.Guest(auc.DoSendEmail)).Methods("POST").Name("auth.do_send_email")
+	r.HandleFunc("/auth/logout", middlewares.Auth(auc.Logout)).Methods("POST").Name("auth.logout")
 
 	// 静态资源
 	r.PathPrefix("/assets/").Handler(http.FileServer(http.Dir("./public")))

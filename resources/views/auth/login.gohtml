@@ -15,7 +15,7 @@
                         <h1 class="mb-2">用户登录</h1>
                         <p class="mb-0">没有账号? <a href="{{ RouteName2URL "auth.register" }}"> 点击注册</a></p>
                         <!-- Form START -->
-                        <form class="mt-sm-4" method="post" action="{{ RouteName2URL "auth.dologin" }}">
+                        <form class="mt-sm-4" method="post" action="{{ RouteName2URL "auth.do_login" }}">
                             <!-- Email -->
                             <div class="mb-3 input-group-lg">
                                 <input type="email" class="form-control" name="email" placeholder="邮箱地址" value="{{ .User.Email }}">
@@ -46,7 +46,7 @@
                                     <input type="checkbox" class="form-check-input" id="rememberCheck" name="remember_me">
                                     <label class="form-check-label" for="rememberCheck">记住我?</label>
                                 </div>
-                                <a href="{{ RouteName2URL "auth.sendemail" }}">忘记密码?</a>
+                                <a href="{{ RouteName2URL "auth.send_email" }}">忘记密码?</a>
                             </div>
                             <!-- Button -->
                             <div class="d-grid">
