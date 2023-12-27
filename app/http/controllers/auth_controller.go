@@ -89,18 +89,23 @@ func (*AuthController) Login(w http.ResponseWriter, r *http.Request) {
 // DoLogin 登录的业务逻辑
 func (*AuthController) DoLogin(w http.ResponseWriter, r *http.Request) {
 	// 初始化表单
-	_email := r.PostFormValue("email")
-	_password := r.PostFormValue("password")
+	// _email := r.PostFormValue("email")
+	// _password := r.PostFormValue("password")
+	_user := user.User{
+		Email:    r.PostFormValue("email"),
+		Password: r.PostFormValue("password"),
+	}
 
-	if err := auth.Attempt(_email, _password); err == nil {
+	fmt.Println(password.Hash(_user.Password))
+	// 加密
+	if err := auth.Attempt(_user.Email, password.Hash(_user.Password)); err == nil {
 		// 登录成功。
 		flash.Success("欢迎回来！")
 		http.Redirect(w, r, "/", http.StatusFound)
 	} else {
 		view.RenderSimple(w, view.D{
-			"Error":    err,
-			"Email":    _email,
-			"Password": _password,
+			"Error": err,
+			"User":  _user,
 		}, "auth.login")
 	}
 }
