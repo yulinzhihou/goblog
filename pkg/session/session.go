@@ -10,11 +10,12 @@ import (
 	"net/http"
 
 	"github.com/gorilla/sessions"
+	"myblog/pkg/config"
 	"myblog/pkg/logger"
 )
 
 // Store gorilla session 存储库
-var Store = sessions.NewCookieStore([]byte("c58c936758f82aee259ba38591fb9cb6f23fa5df"))
+var Store = sessions.NewCookieStore([]byte(config.GetString("app.key")))
 
 // Session 当前会话
 var Session *sessions.Session
@@ -30,7 +31,7 @@ func StartSession(w http.ResponseWriter, r *http.Request) {
 	var err error
 	// Store.Get() 的第二个参数 是 Cookie 的名称
 	// gorilla/sessions 支持多会话，本项目我们只使用单一会话即可
-	Session, err = Store.Get(r, "my-blog-session")
+	Session, err = Store.Get(r, config.GetString("session.session_name"))
 	logger.LogError(err)
 
 	Request = r
@@ -63,9 +64,9 @@ func Flush() {
 // Save 保持会话
 func Save() {
 	// 非 HTTPS 的链接无法使用 Secure 和 httpOnly，浏览器会报错
-	Session.Options.Secure = true
-	Session.Options.HttpOnly = true
-	Session.Options.SameSite = http.SameSiteNoneMode
+	// Session.Options.Secure = true
+	// Session.Options.HttpOnly = true
+	// Session.Options.SameSite = http.SameSiteNoneMode
 	err := Session.Save(Request, Response)
 	logger.LogError(err)
 }

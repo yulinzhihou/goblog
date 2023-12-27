@@ -17,4 +17,4 @@ tmp/
 !README.md
 !LICENSE
 *.mp4
-
+.env

@@ -232,22 +232,3 @@ func (*ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
-
-// // 验证文章表单字段
-// func validateArticleFormData(title string, content string) map[string]string {
-// 	errs := make(map[string]string)
-// 	// 验证标题
-// 	if title == "" {
-// 		errors["title"] = "标题不能为空"
-// 	} else if utf8.RuneCountInString(title) < 3 || utf8.RuneCountInString(content) > 50 {
-// 		errors["title"] = "标题长度应该介于 3-50 个字"
-// 	}
-//
-// 	if content == "" {
-// 		errors["content"] = "内容不能为空"
-// 	} else if utf8.RuneCountInString(content) < 10 {
-// 		errors["content"] = "内容长度应大于 10 个字"
-// 	}
-//
-// 	return errors
-// }

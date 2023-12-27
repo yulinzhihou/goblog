@@ -42,7 +42,7 @@ func RegisterWebRoutes(r *mux.Router) {
 	r.HandleFunc("/auth/dologin", auc.DoLogin).Methods("POST").Name("auth.dologin")
 	r.HandleFunc("/auth/forget", auc.Forget).Methods("GET").Name("auth.forget")
 	r.HandleFunc("/auth/resetpassword", auc.ResetPassword).Methods("POST").Name("auth.resetpassword")
-	r.HandleFunc("/auth/sendemail", auc.SendEmail).Methods("GET").Name("auth.sendemail")
+	r.HandleFunc("/auth/send_email", auc.SendEmail).Methods("GET").Name("auth.send_email")
 	r.HandleFunc("/auth/dosend", auc.DoSendEmail).Methods("POST").Name("auth.dosendemail")
 	r.HandleFunc("/auth/logout", auc.Logout).Methods("POST").Name("auth.logout")
 
