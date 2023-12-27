@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"myblog/pkg/auth"
+	"myblog/pkg/flash"
 	"myblog/pkg/logger"
 	"myblog/pkg/route"
 )
@@ -35,6 +36,8 @@ func RenderSimple(w io.Writer, data D, tplFiles ...string) {
 func RenderTemplate(w io.Writer, name string, data D, tplFiles ...string) {
 	// 通用模板数据
 	data["isLogined"] = auth.Check()
+	data["loginUser"] = auth.User
+	data["flash"] = flash.All()
 	// 生成模板文件
 	allFiles := getTemplateFiles(tplFiles...)
 	// 解析所有模板文件

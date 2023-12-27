@@ -1,5 +1,5 @@
 // controllers
-// Author : Yulinzhihou
+// Author : yulinzhihou
 // Github : https://github.com/yulinzhihou
 // WebSite: yulinzhihou.com
 // Date   : 2023/12/22
@@ -7,6 +7,7 @@
 package controllers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -15,6 +16,7 @@ import (
 	"myblog/app/models/user"
 	"myblog/app/requests"
 	"myblog/pkg/auth"
+	"myblog/pkg/flash"
 	"myblog/pkg/password"
 	"myblog/pkg/route"
 	"myblog/pkg/view"
@@ -24,16 +26,9 @@ import (
 type AuthController struct {
 }
 
-// 用户表单验证
-type userForm struct {
-	Username        string `valid:"name"`
-	Password        string `valid:"password"`
-	Email           string `valid:"email"`
-	PasswordConfirm string `valid:"password_confirm"`
-}
-
 // Register 用户注册页面
 func (*AuthController) Register(w http.ResponseWriter, r *http.Request) {
+
 	view.RenderSimple(w, view.D{
 		"User": user.User{},
 	}, "auth.register")
@@ -63,6 +58,8 @@ func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil {
 			if _user.ID > 0 {
+				// 登录用户并跳转到首页，提示消息
+				flash.Success("恭喜注册成功！")
 				auth.Login(_user)
 				http.Redirect(w, r, route.Name2URL("auth.login"), http.StatusFound)
 			} else {
@@ -92,18 +89,18 @@ func (*AuthController) Login(w http.ResponseWriter, r *http.Request) {
 // DoLogin 登录的业务逻辑
 func (*AuthController) DoLogin(w http.ResponseWriter, r *http.Request) {
 	// 初始化表单
-	email := r.PostFormValue("email")
-	password := r.PostFormValue("password")
+	_email := r.PostFormValue("email")
+	_password := r.PostFormValue("password")
 
-	if err := auth.Attempt(email, password); err == nil {
-		fmt.Println(err)
+	if err := auth.Attempt(_email, _password); err == nil {
 		// 登录成功。
+		flash.Success("欢迎回来！")
 		http.Redirect(w, r, "/", http.StatusFound)
 	} else {
 		view.RenderSimple(w, view.D{
 			"Error":    err,
-			"Email":    email,
-			"Password": password,
+			"Email":    _email,
+			"Password": _password,
 		}, "auth.login")
 	}
 }
@@ -116,14 +113,14 @@ func (*AuthController) Forget(w http.ResponseWriter, r *http.Request) {
 	_user, err := user.Get(id)
 	// 判断用户是否存在
 	if err != nil {
-		if err == gorm.ErrRecordNotFound {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			w.WriteHeader(http.StatusNotFound)
-			view.Render(w, view.D{
+			view.RenderSimple(w, view.D{
 				"Message": "用户数据不存在",
 			}, "errors.404")
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
-			view.Render(w, view.D{
+			view.RenderSimple(w, view.D{
 				"Message": "服务器内部错误",
 			}, "errors.50x")
 		}
@@ -141,14 +138,14 @@ func (*AuthController) ResetPassword(w http.ResponseWriter, r *http.Request) {
 	id := r.PostFormValue("id")
 	_user, err := user.Get(id)
 	if err != nil {
-		if err == gorm.ErrRecordNotFound {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			w.WriteHeader(http.StatusNotFound)
-			view.Render(w, view.D{
+			view.RenderSimple(w, view.D{
 				"Message": "用户未找到",
 			}, "errors.404")
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
-			view.Render(w, view.D{
+			view.RenderSimple(w, view.D{
 				"Message": "服务器内部错误",
 			}, "errors.50x")
 		}
@@ -162,16 +159,16 @@ func (*AuthController) ResetPassword(w http.ResponseWriter, r *http.Request) {
 		if len(errs) == 0 {
 			view.RenderSimple(w, view.D{
 				"Errors": errs,
-				"User":   _user1,
+				"User":   _user,
 			}, "auth.forget")
 		} else {
 			_user.Password = password.Hash(_user1.Password)
-			rowsAffected, err := _user.Update()
+			rowsAffected, err1 := _user.Update()
 
-			if err != nil {
+			if err1 != nil {
 				// 数据库异常
 				w.WriteHeader(http.StatusInternalServerError)
-				view.Render(w, view.D{
+				view.RenderSimple(w, view.D{
 					"Message": "服务器内部错误",
 				}, "errors.50x")
 				return
@@ -181,7 +178,10 @@ func (*AuthController) ResetPassword(w http.ResponseWriter, r *http.Request) {
 				showURL := route.Name2URL("auth.login")
 				http.Redirect(w, r, showURL, http.StatusFound)
 			} else {
-				fmt.Fprint(w, "您未作出任何修改")
+				_, err = fmt.Fprint(w, "您未作出任何修改")
+				if err != nil {
+					return
+				}
 			}
 		}
 	}
@@ -190,7 +190,7 @@ func (*AuthController) ResetPassword(w http.ResponseWriter, r *http.Request) {
 
 // SendEmail 发送邮件
 func (*AuthController) SendEmail(w http.ResponseWriter, r *http.Request) {
-	view.RenderSimple(w, view.D{}, "auth.sendemail")
+	view.RenderSimple(w, view.D{}, "auth.send_email")
 }
 
 // DoSendEmail 发送邮件逻辑
@@ -201,7 +201,7 @@ func (*AuthController) DoSendEmail(w http.ResponseWriter, r *http.Request) {
 	_user, err := user.GetByEmail(email)
 	// 如果出现 错误
 	if err != nil {
-		if err == gorm.ErrRecordNotFound {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			view.RenderSimple(w, view.D{
 				"Messages": "账号不存在",
 			}, "errors.404")
@@ -215,12 +215,16 @@ func (*AuthController) DoSendEmail(w http.ResponseWriter, r *http.Request) {
 		id := _user.ID
 		// TODO: 发送带 ID 链接邮件到邮箱
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, "邮件发送成功， ID :"+strconv.FormatUint(id, 10))
+		_, err2 := fmt.Fprint(w, "邮件发送成功， ID :"+strconv.FormatUint(id, 10))
+		if err2 != nil {
+			return
+		}
 	}
 }
 
 // Logout 退出系统逻辑
 func (*AuthController) Logout(w http.ResponseWriter, r *http.Request) {
 	auth.Logout()
+	flash.Success("您已成功退出登录！")
 	http.Redirect(w, r, "/", http.StatusFound)
 }

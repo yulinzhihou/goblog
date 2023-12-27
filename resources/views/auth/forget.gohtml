@@ -18,22 +18,22 @@
                             <span class="d-block">已经有账号? <a href="">点击登录</a></span>
                         </div>
                         <!-- Form START -->
-                        <form class="mt-4" method="post" action="{{ RouteName2URL "auth.resetpassword"}}">
+                        <form class="mt-4" method="post" action="{{ RouteName2URL "auth.resetpassword" }}">
                             <!-- id -->
                             <input type="hidden" name="id" value="{{ .User.ID }}">
                             <!-- Email -->
                             <div class="mb-3 input-group-lg">
-                                <input type="email" class="form-control" name="email" disabled value="{{ .User.Username }}">
+                                <input type="email" class="form-control" name="email" disabled value="{{ .User.Email }}">
                             </div>
 
                             <div class="mb-3 input-group-lg">
-                                <input type="email" class="form-control" name="username" disabled value="{{ .User.Email }}">
+                                <input type="email" class="form-control" name="username" disabled value="{{ .User.Username }}">
                             </div>
                             <!-- New password -->
                             <div class="mb-3 position-relative">
                                 <!-- Input group -->
                                 <div class="input-group input-group-lg">
-                                    <input class="form-control fakepassword" type="password" id="psw-input" placeholder="输入新密码" name="password">
+                                    <input class="form-control fakepassword" type="password" id="psw-input" placeholder="输入新密码" name="password" value="">
                                     <span class="input-group-text p-0">
                                       <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
                                     </span>
@@ -51,7 +51,7 @@
                             </div>
                             <!-- Confirm password -->
                             <div class="mb-3 input-group-lg">
-                                <input class="form-control" type="password" name="confirm_password" placeholder="输入确认密码">
+                                <input class="form-control" type="password" name="password_confirm" placeholder="输入确认密码" value="">
                             </div>
                             <!-- Button -->
                             <div class="d-grid">

@@ -17,12 +17,12 @@ import (
 // Article 模型
 type Article struct {
 	models.BaseModel
-	Title   string    `gorm:"type:varchar(255);not null;default:'';comment:标题"`
-	Image   string    `gorm:"type:varchar(255);not null;default:'';comment:图片"`
-	Brief   string    `gorm:"type:varchar(255);not null;default:'';comment:简介"`
-	Content string    `gorm:"type:longtext;comment:内容"`
-	Status  uint8     `gorm:"type:tinyint unsigned;true;not null;default:0;comment:状态0=草稿1=已发布2=未发布"`
-	UserID  uint64    `gorm:"type:bigint unsigned;not null;unsigned;comment:用户ID"`
+	Title   string    `gorm:"type:varchar(255);not null;default:'';comment:标题" valid:"title"`
+	Image   string    `gorm:"type:varchar(255);not null;default:'';comment:图片" valid:"image"`
+	Brief   string    `gorm:"type:varchar(255);not null;default:'';comment:简介" valid:"brief"`
+	Content string    `gorm:"type:longtext;comment:内容" valid:"content"`
+	Status  uint8     `gorm:"type:tinyint unsigned;true;not null;default:0;comment:状态0=草稿1=已发布2=未发布" valid:"status"`
+	UserID  uint64    `gorm:"type:bigint unsigned;not null;unsigned;comment:用户ID" valid:"user_id"`
 	User    user.User `gorm:"-"`
 }
 
