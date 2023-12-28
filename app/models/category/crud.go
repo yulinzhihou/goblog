@@ -11,10 +11,20 @@ import (
 	"myblog/pkg/model"
 )
 
+// Store 分类新增保存
 func (c *Category) Store() (err error) {
 	if err = model.DB.Create(&c).Error; err != nil {
 		logger.LogError(err)
 		return err
 	}
 	return nil
+}
+
+// All 所有分类数据
+func All() ([]Category, error) {
+	var categories []Category
+	if err := model.DB.Find(&categories).Error; err != nil {
+		return categories, err
+	}
+	return categories, nil
 }

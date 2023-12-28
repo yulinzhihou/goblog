@@ -12,6 +12,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"myblog/app/models/category"
+	"myblog/app/models/user"
 	"myblog/pkg/auth"
 	"myblog/pkg/flash"
 	"myblog/pkg/logger"
@@ -38,6 +40,8 @@ func RenderTemplate(w io.Writer, name string, data D, tplFiles ...string) {
 	data["isLogined"] = auth.Check()
 	data["loginUser"] = auth.User
 	data["flash"] = flash.All()
+	data["Users"], _ = user.All()
+	data["Categories"], _ = category.All()
 	// 生成模板文件
 	allFiles := getTemplateFiles(tplFiles...)
 	// 解析所有模板文件
