@@ -36,7 +36,7 @@ func GetAll(r *http.Request, perPage int64) ([]Article, pagination.ViewData, err
 	viewData := _pager.Paging()
 	// 获取数据
 	var articles []Article
-	err := _pager.Result(&articles)
+	err := _pager.Results(&articles)
 	if err != nil {
 		return nil, pagination.ViewData{}, err
 	}
@@ -76,9 +76,27 @@ func (article *Article) Delete() (rowsAffected int64, err error) {
 
 // GetByUserID 通过 user_id 获取用户所有的文章
 func GetByUserID(uid string) ([]Article, error) {
+
 	var articles []Article
 	if err := model.DB.Where("user_id = ?", uid).Preload("User").Find(&articles).Error; err != nil {
 		return articles, err
 	}
 	return articles, nil
+}
+
+// GetByCategoryID 通过 category_id 获取文章数据
+func GetByCategoryID(categoryId string, r *http.Request, perPage int64) ([]Article, pagination.ViewData, error) {
+	// 初始化分页数据
+	db := model.DB.Model(Article{}).Where("category_id = ?", categoryId).Order("created_at desc")
+	_pager := pagination.New(r, db, route.Name2URL("categories.show", "id", categoryId), perPage)
+	// 获取视图数据
+	viewData := _pager.Paging()
+	// 获取数据
+	var articles []Article
+	err := _pager.Results(&articles)
+	if err != nil {
+		return nil, pagination.ViewData{}, err
+	}
+
+	return articles, viewData, nil
 }

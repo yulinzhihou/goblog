@@ -9,6 +9,7 @@ package category
 import (
 	"myblog/pkg/logger"
 	"myblog/pkg/model"
+	"myblog/pkg/types"
 )
 
 // Store 分类新增保存
@@ -27,4 +28,14 @@ func All() ([]Category, error) {
 		return categories, err
 	}
 	return categories, nil
+}
+
+// Get 获取分类数据
+func Get(idStr string) (Category, error) {
+	var category Category
+	id := types.StringToInt64(idStr)
+	if err := model.DB.First(&category, id).Error; err != nil {
+		return category, err
+	}
+	return category, nil
 }

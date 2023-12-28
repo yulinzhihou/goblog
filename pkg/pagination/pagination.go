@@ -137,8 +137,8 @@ func (p Pagination) CurrentPage() int64 {
 	return p.Page
 }
 
-// Result 返回请求数据，请注意 data 参数为 GORM 模型的 Slice 对象
-func (p Pagination) Result(data interface{}) error {
+// Results 返回请求数据，请注意 data 参数为 GORM 模型的 Slice 对象
+func (p Pagination) Results(data interface{}) error {
 	var err error
 	var offset int
 	page := p.CurrentPage()

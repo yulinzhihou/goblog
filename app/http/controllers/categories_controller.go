@@ -10,6 +10,7 @@ import (
 	"net/http"
 
 	"github.com/spf13/cast"
+	"myblog/app/models/article"
 	"myblog/app/models/category"
 	"myblog/app/requests"
 	"myblog/pkg/flash"
@@ -29,6 +30,21 @@ func (cc CategoriesController) Index(w http.ResponseWriter, r *http.Request) {
 
 // Show 文章分类详情
 func (cc CategoriesController) Show(w http.ResponseWriter, r *http.Request) {
+	// 获取 URL 参数
+	id := route.GetRouteVariable("id", r)
+	// 读取对应的分类数据
+	_category, err := category.Get(id)
+	// 获取结果集
+	articles, pagerData, err := article.GetByCategoryID(_category.GetStringID(), r, 2)
+	// 判断
+	if err != nil {
+		cc.ResponseForSQLError(w, err, "", "")
+	} else {
+		view.Render(w, view.D{
+			"Articles":  articles,
+			"PagerData": pagerData,
+		}, "articles.index")
+	}
 }
 
 // Create 文章分类创建
