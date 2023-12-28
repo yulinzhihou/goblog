@@ -7,12 +7,10 @@
 package controllers
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 
-	"gorm.io/gorm"
 	"myblog/app/models/user"
 	"myblog/app/requests"
 	"myblog/pkg/auth"
@@ -24,6 +22,7 @@ import (
 
 // AuthController 用户认证类，注册登录，退出
 type AuthController struct {
+	BaseController
 }
 
 // Register 用户注册页面
@@ -35,7 +34,7 @@ func (*AuthController) Register(w http.ResponseWriter, r *http.Request) {
 }
 
 // DoRegister 用户注册处理逻辑
-func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
+func (auc *AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 	// 初始化变量
 	_user := user.User{
 		Username:        r.PostFormValue("username"),
@@ -63,11 +62,7 @@ func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 				auth.Login(_user)
 				http.Redirect(w, r, route.Name2URL("auth.login"), http.StatusFound)
 			} else {
-				view.RenderSimple(w, view.D{
-					"Message": "创建用户失败，请联系管理员",
-					"Errors":  errs,
-					"User":    _user,
-				}, "errors.50x")
+				auc.ResponseForSQLError(w, err, "", "创建用户失败，请联系管理员")
 			}
 		} else {
 			view.RenderSimple(w, view.D{
@@ -88,9 +83,6 @@ func (*AuthController) Login(w http.ResponseWriter, r *http.Request) {
 
 // DoLogin 登录的业务逻辑
 func (*AuthController) DoLogin(w http.ResponseWriter, r *http.Request) {
-	// 初始化表单
-	// _email := r.PostFormValue("email")
-	// _password := r.PostFormValue("password")
 	_user := user.User{
 		Email:    r.PostFormValue("email"),
 		Password: r.PostFormValue("password"),
@@ -111,24 +103,14 @@ func (*AuthController) DoLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 // Forget 忘记密码
-func (*AuthController) Forget(w http.ResponseWriter, r *http.Request) {
+func (auc *AuthController) Forget(w http.ResponseWriter, r *http.Request) {
 	// 获取重置密码链接
 	id := r.FormValue("id")
 	// 查询用户数据
 	_user, err := user.Get(id)
 	// 判断用户是否存在
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			w.WriteHeader(http.StatusNotFound)
-			view.RenderSimple(w, view.D{
-				"Message": "用户数据不存在",
-			}, "errors.404")
-		} else {
-			w.WriteHeader(http.StatusInternalServerError)
-			view.RenderSimple(w, view.D{
-				"Message": "服务器内部错误",
-			}, "errors.50x")
-		}
+		auc.ResponseForSQLError(w, err, "", "")
 	} else {
 		view.RenderSimple(w, view.D{
 			"User": _user,
@@ -138,22 +120,12 @@ func (*AuthController) Forget(w http.ResponseWriter, r *http.Request) {
 }
 
 // ResetPassword 忘记密码逻辑
-func (*AuthController) ResetPassword(w http.ResponseWriter, r *http.Request) {
+func (auc *AuthController) ResetPassword(w http.ResponseWriter, r *http.Request) {
 	// 验证邮件链接，解析出ID和唯一码，现在没有这个唯一码，暂时先实现逻辑
 	id := r.PostFormValue("id")
 	_user, err := user.Get(id)
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			w.WriteHeader(http.StatusNotFound)
-			view.RenderSimple(w, view.D{
-				"Message": "用户未找到",
-			}, "errors.404")
-		} else {
-			w.WriteHeader(http.StatusInternalServerError)
-			view.RenderSimple(w, view.D{
-				"Message": "服务器内部错误",
-			}, "errors.50x")
-		}
+		auc.ResponseForSQLError(w, err, "", "")
 	} else {
 		// 表示查询用户成功。
 		_user1 := user.User{
@@ -171,11 +143,7 @@ func (*AuthController) ResetPassword(w http.ResponseWriter, r *http.Request) {
 			rowsAffected, err1 := _user.Update()
 
 			if err1 != nil {
-				// 数据库异常
-				w.WriteHeader(http.StatusInternalServerError)
-				view.RenderSimple(w, view.D{
-					"Message": "服务器内部错误",
-				}, "errors.50x")
+				auc.ResponseForSQLError(w, err, "", "")
 				return
 			}
 
@@ -199,22 +167,14 @@ func (*AuthController) SendEmail(w http.ResponseWriter, r *http.Request) {
 }
 
 // DoSendEmail 发送邮件逻辑
-func (*AuthController) DoSendEmail(w http.ResponseWriter, r *http.Request) {
+func (auc *AuthController) DoSendEmail(w http.ResponseWriter, r *http.Request) {
 	// 接收用户提交的 Email 数据
 	email := r.PostFormValue("email")
 	// 根据 Email 查询用户
 	_user, err := user.GetByEmail(email)
 	// 如果出现 错误
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			view.RenderSimple(w, view.D{
-				"Messages": "账号不存在",
-			}, "errors.404")
-		} else {
-			view.RenderSimple(w, view.D{
-				"Message": "内部错误，请稍后再试",
-			}, "errors.50x")
-		}
+		auc.ResponseForSQLError(w, err, "", "")
 	} else {
 		// 表示没有问题
 		id := _user.ID

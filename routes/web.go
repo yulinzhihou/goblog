@@ -50,6 +50,11 @@ func RegisterWebRoutes(r *mux.Router) {
 	uc := new(controllers.UserController)
 	r.HandleFunc("/users/{id:[0-9]+}", middlewares.Auth(uc.Show)).Methods("GET").Name("users.show")
 
+	// 分类相关
+	cc := new(controllers.CategoriesController)
+	r.HandleFunc("/categories/create", middlewares.Auth(cc.Create)).Methods("GET").Name("categories.create")
+	r.HandleFunc("/categories", middlewares.Auth(cc.Store)).Methods("POST").Name("categories.store")
+
 	// 静态资源
 	r.PathPrefix("/assets/").Handler(http.FileServer(http.Dir("./public")))
 

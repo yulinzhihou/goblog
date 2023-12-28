@@ -1,0 +1,38 @@
+{{define "title"}}
+    新增分类
+{{end}}
+<!-- **************** MAIN CONTENT START **************** -->
+{{define "main"}}
+    <main>
+
+        <!-- Container START -->
+        <div class="container">
+            <div class="row g-4">
+
+                <!-- Sidenav START -->
+                {{template "_form_slide" .}}
+                <!-- Sidenav END -->
+
+                <!-- Main content START -->
+                <div class="col-md-8 col-lg-6 vstack gap-4">
+                    <!-- Create a page START -->
+                    <div class="card">
+                        <!-- Title START -->
+                        <div class="card-header border-0 pb-0">
+                            <h1 class="h4 card-title mb-0">新增分类</h1>
+                        </div>
+                        <!-- Title END -->
+                        <!-- Create a page form START -->
+                        {{template "_form_field" .}}
+                        <!-- Create a page form END -->
+                    </div>
+                    <!-- Create a page END -->
+                </div>
+
+            </div> <!-- Row END -->
+        </div>
+        <!-- Container END -->
+
+    </main>
+{{end}}
+<!-- **************** MAIN CONTENT END **************** -->

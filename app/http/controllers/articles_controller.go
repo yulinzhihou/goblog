@@ -46,7 +46,7 @@ func (*ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
 }
 
 // Store 文章新增
-func (*ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
+func (ac *ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
 	_article := article.Article{
 		Title:   r.PostFormValue("title"),
 		Content: r.PostFormValue("content"),
@@ -63,10 +63,7 @@ func (*ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
 			flash.Success("插入成功，ID 为" + strconv.FormatUint(_article.ID, 10))
 			http.Redirect(w, r, showURL, http.StatusFound)
 		} else {
-			w.WriteHeader(http.StatusInternalServerError)
-			view.RenderSimple(w, view.D{
-				"Message": "创建文章失败，服务器内部错误",
-			}, "errors.50x")
+			ac.ResponseForSQLError(w, err, "", "创建文章失败，服务器内部错误")
 		}
 	} else {
 		view.Render(w, view.D{
@@ -142,10 +139,7 @@ func (ac *ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 
 				if err1 != nil {
 					// 数据库错误
-					w.WriteHeader(http.StatusInternalServerError)
-					view.RenderSimple(w, view.D{
-						"Message": "服务器内部错误",
-					}, "errors.50x")
+					ac.ResponseForSQLError(w, err, "", "")
 					return
 				}
 
@@ -182,10 +176,7 @@ func (ac *ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
 			rowsAffected, err1 := _article.Delete()
 			// 是否发生错误
 			if err1 != nil {
-				w.WriteHeader(http.StatusInternalServerError)
-				view.RenderSimple(w, view.D{
-					"Message": "服务器内部错误",
-				}, "errors.50x")
+				ac.ResponseForSQLError(w, err, "", "")
 			} else {
 				// 未发生错误
 				if rowsAffected > 0 {
@@ -193,10 +184,7 @@ func (ac *ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
 					indexURL := route.Name2URL("articles.index")
 					http.Redirect(w, r, indexURL, http.StatusFound)
 				} else {
-					w.WriteHeader(http.StatusNotFound)
-					view.RenderSimple(w, view.D{
-						"Message": "文章未找到",
-					}, "errors.404")
+					ac.ResponseForNotFound(w, err, "文章未找到")
 				}
 			}
 		}

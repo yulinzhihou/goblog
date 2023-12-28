@@ -13,20 +13,20 @@ import (
 
 // 定义规则
 var articleRules = govalidator.MapData{
-	"title":   []string{"required", "min:3", "max:60"},
-	"content": []string{"required", "min:10"},
+	"title":   []string{"required", "min_cn:3", "max_cn:60", "not_exists:articles,title"},
+	"content": []string{"required", "min_cn:10"},
 }
 
 // 定义提示
 var articleMessages = govalidator.MapData{
 	"title": []string{
 		"required:文章标题必填项",
-		"min:文章标题最小长度为 3",
-		"max:文章标题最大长度为 60",
+		"min_cn:文章标题最小长度为 3 个字",
+		"max_cn:文章标题最大长度为 60 个字",
 	},
 	"content": []string{
 		"required:文章内容必填",
-		"min:文章内容最小 10 个字符",
+		"min_cn:文章内容最小 10 个字",
 	},
 }
 

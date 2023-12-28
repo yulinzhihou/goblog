@@ -9,7 +9,9 @@ package requests
 import (
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
+	"unicode/utf8"
 
 	"myblog/pkg/model"
 
@@ -38,4 +40,35 @@ func init() {
 		return nil
 
 	})
+
+	// max_cn:2 最大中文长度
+	govalidator.AddCustomRule("max_cn", func(field string, rule string, message string, value interface{}) error {
+		valLength := utf8.RuneCountInString(value.(string))
+		// 去除验证字段前缀，获取验证字段的值
+		l, _ := strconv.Atoi(strings.TrimPrefix(rule, "max_cn:"))
+		if valLength < l {
+			if message != "" {
+				return errors.New(message)
+			}
+			return fmt.Errorf("长度需要小于 %d 个字", l)
+		}
+		return nil
+	})
+
+	// min_cn:2 最小中文字长度
+	govalidator.AddCustomRule("min:cn", func(field string, rule string, message string, value interface{}) error {
+		valLength := utf8.RuneCountInString(value.(string))
+		// 去除验证规则前缀，拿到验证字段的限制值
+		l, _ := strconv.Atoi(strings.TrimPrefix(rule, "min:cn"))
+		// 进行判断
+		if valLength < l {
+			if message != "" {
+				return errors.New(message)
+			}
+			return fmt.Errorf("长度需要大于 %d 个字", l)
+		}
+
+		return nil
+	})
+
 }

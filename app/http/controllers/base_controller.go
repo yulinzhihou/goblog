@@ -20,6 +20,20 @@ import (
 type BaseController struct {
 }
 
+// ResponseForNotFound 未找到记录，统一跳转到 404
+func (bc BaseController) ResponseForNotFound(w http.ResponseWriter, err error, notFoundMessage string) {
+	// 初始化消息提示
+	if notFoundMessage == "" {
+		notFoundMessage = "页面未找到"
+	}
+
+	// 未找到记录
+	w.WriteHeader(http.StatusNotFound)
+	view.RenderSimple(w, view.D{
+		"Message": notFoundMessage,
+	}, "errors.404")
+}
+
 // ResponseForSQLError 处理 SQL 错误并返回
 func (bc BaseController) ResponseForSQLError(w http.ResponseWriter, err error, notFoundMessage string, internalMessage string) {
 	// 初始化消息提示

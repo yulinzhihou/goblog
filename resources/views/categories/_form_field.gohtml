@@ -1,0 +1,29 @@
+{{define "_form_field"}}
+    <div class="card-body">
+        <form class="row g-3" method="post" action="{{ RouteName2URL "categories.store" }}">
+            <!-- Page information -->
+            <div class="col-12">
+                <label for="title" class="form-label">名称 </label>
+                <input type="text" name="name" class="form-control" placeholder="分类名称 (必填)">
+            </div>
+            <!-- Display name -->
+            <div class="col-12">
+                <label for="brief" class="form-label">描述 </label>
+                <input type="text" name="desc" class="form-control" placeholder="分类描述 (必填)">
+            </div>
+
+            <!-- 排序 -->
+            <div class="col-12">
+                <label for="sort" class="form-label">排序</label>
+                <input type="range" class="form-range" min="0" max="999" step="1" id="sort" name="sort">
+            </div>
+
+            <!-- Divider -->
+            <hr>
+            <!-- Button  -->
+            <div class="col-12 text-end">
+                <button type="submit" class="btn btn-primary mb-0">保存</button>
+            </div>
+        </form>
+    </div>
+{{end}}

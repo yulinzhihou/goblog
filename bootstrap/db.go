@@ -11,6 +11,7 @@ import (
 
 	"gorm.io/gorm"
 	"myblog/app/models/article"
+	"myblog/app/models/category"
 	"myblog/app/models/user"
 	"myblog/pkg/config"
 	"myblog/pkg/logger"
@@ -41,6 +42,7 @@ func migration(db *gorm.DB) {
 	err := db.AutoMigrate(
 		&user.User{},
 		&article.Article{},
+		&category.Category{},
 	)
 	if err != nil {
 		logger.LogError(err)

@@ -11,7 +11,6 @@ import (
 
 	"myblog/app/models/article"
 	"myblog/app/models/user"
-	"myblog/pkg/logger"
 	"myblog/pkg/route"
 	"myblog/pkg/view"
 )
@@ -34,12 +33,8 @@ func (uc *UserController) Show(w http.ResponseWriter, r *http.Request) {
 		// 读取成功，显示用户所有的文章
 		articles, err1 := article.GetByUserID(_user.GetStringID())
 		if err1 != nil {
-			logger.LogError(err1)
-			w.WriteHeader(http.StatusInternalServerError)
-			view.RenderSimple(w, view.D{
-				"Message": "数据错误，服务器内部错误",
-			}, "errors.50x")
-
+			uc.ResponseForSQLError(w, err, "", "")
+			return
 		} else {
 			view.Render(w, view.D{
 				"Articles": articles,
