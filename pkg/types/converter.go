@@ -1,6 +1,6 @@
 // types
 // Author : Yulinzhihou
-// Github : https://github.com/yulinzhihou
+// GitHub : https://github.com/yulinzhihou
 // WebSite: yulinzhihou.com
 // Date   : 2023/12/21
 
@@ -20,6 +20,15 @@ func Int64ToString(num int64) string {
 // StringToUint64 将 string 转换成 uint64
 func StringToUint64(idStr string) uint64 {
 	i, err := strconv.ParseUint(idStr, 10, 64)
+	if err != nil {
+		logger.LogError(err)
+	}
+	return i
+}
+
+// StringToInt64 将 string 转换成 uint64
+func StringToInt64(idStr string) int64 {
+	i, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
 		logger.LogError(err)
 	}

@@ -1,6 +1,6 @@
 // route
 // Author : Yulinzhihou
-// Github : https://github.com/yulinzhihou
+// GitHub : https://github.com/yulinzhihou
 // WebSite: yulinzhihou.com
 // Date   : 2023/12/21
 
@@ -10,6 +10,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"myblog/pkg/config"
+	"myblog/pkg/logger"
 )
 
 var route *mux.Router
@@ -23,9 +25,10 @@ func SetRoute(r *mux.Router) {
 func Name2URL(routeName string, pairs ...string) string {
 	url, err := route.Get(routeName).URL(pairs...)
 	if err != nil {
+		logger.LogError(err)
 		return ""
 	}
-	return url.String()
+	return config.GetString("app.url") + url.String()
 }
 
 // GetRouteVariable 获取 URI 路由参数

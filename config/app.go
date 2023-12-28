@@ -1,6 +1,6 @@
 // config
 // Author : Yulinzhihou
-// Github : https://github.com/yulinzhihou
+// GitHub : https://github.com/yulinzhihou
 // WebSite: yulinzhihou.com
 // Date   : 2023/12/27
 
@@ -14,6 +14,8 @@ func init() {
 	config.Add("app", config.StrMap{
 		// 应用名称
 		"name": config.Env("APP_NAME", "my_blog"),
+		// APP URL
+		"url": config.Env("APP_URL", "http://localhost:3000"),
 		// 当前环境
 		"env": config.Env("APP_ENV", "production"),
 		// 是否进入调试模式

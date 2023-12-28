@@ -1,14 +1,18 @@
 // Crud 文章增删改查
 // Author : Yulinzhihou
-// Github : https://github.com/yulinzhihou
+// GitHub : https://github.com/yulinzhihou
 // WebSite: yulinzhihou.com
 // Date   : 2023/12/21
 
 package article
 
 import (
+	"net/http"
+
 	"myblog/pkg/logger"
 	"myblog/pkg/model"
+	"myblog/pkg/pagination"
+	"myblog/pkg/route"
 	"myblog/pkg/types"
 )
 
@@ -23,12 +27,21 @@ func Get(idstr string) (Article, error) {
 }
 
 // GetAll 获取文章列表
-func GetAll() ([]Article, error) {
+func GetAll(r *http.Request, perPage int64) ([]Article, pagination.ViewData, error) {
+	// 初始化分页实例
+	db := model.DB.Find(Article{}).Order("created_at desc")
+	_pager := pagination.New(r, db, route.Name2URL("home"), perPage)
+
+	// 获取实图数据
+	viewData := _pager.Paging()
+	// 获取数据
 	var articles []Article
-	if err := model.DB.Find(&articles).Error; err != nil {
-		return articles, err
+	err := _pager.Result(&articles)
+	if err != nil {
+		return nil, pagination.ViewData{}, err
 	}
-	return articles, nil
+
+	return articles, viewData, nil
 }
 
 // Create 创建文章，通过 article.ID 来判断是否新增成功
