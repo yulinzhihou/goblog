@@ -56,7 +56,7 @@ func init() {
 	})
 
 	// min_cn:2 最小中文字长度
-	govalidator.AddCustomRule("min:cn", func(field string, rule string, message string, value interface{}) error {
+	govalidator.AddCustomRule("min_cn", func(field string, rule string, message string, value interface{}) error {
 		valLength := utf8.RuneCountInString(value.(string))
 		// 去除验证规则前缀，拿到验证字段的限制值
 		l, _ := strconv.Atoi(strings.TrimPrefix(rule, "min:cn"))

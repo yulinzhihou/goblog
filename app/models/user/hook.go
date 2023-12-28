@@ -13,7 +13,9 @@ import (
 
 // BeforeCreate GORM 的模型勾子，创建模型应用前
 func (user *User) BeforeCreate(tx *gorm.DB) (err error) {
-	user.Password = password.Hash(user.Password)
+	if !password.IsHashed(user.Password) {
+		user.Password = password.Hash(user.Password)
+	}
 	return
 }
 

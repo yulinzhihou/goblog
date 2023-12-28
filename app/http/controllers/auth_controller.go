@@ -67,7 +67,10 @@ func (auc *AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 		} else {
 			view.RenderSimple(w, view.D{
 				"Errors": errs,
-				"User":   _user,
+				"User": user.User{
+					Email:    _user.Email,
+					Password: r.PostFormValue("password"),
+				},
 			}, "auth.login")
 		}
 	}
@@ -87,10 +90,8 @@ func (*AuthController) DoLogin(w http.ResponseWriter, r *http.Request) {
 		Email:    r.PostFormValue("email"),
 		Password: r.PostFormValue("password"),
 	}
-
-	fmt.Println(password.Hash(_user.Password))
 	// 加密
-	if err := auth.Attempt(_user.Email, password.Hash(_user.Password)); err == nil {
+	if err := auth.Attempt(_user.Email, _user.Password); err == nil {
 		// 登录成功。
 		flash.Success("欢迎回来！")
 		http.Redirect(w, r, "/", http.StatusFound)

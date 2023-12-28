@@ -7,6 +7,8 @@
 package user
 
 import (
+	"fmt"
+
 	"myblog/app/models"
 	"myblog/pkg/password"
 	"myblog/pkg/route"
@@ -29,6 +31,8 @@ type User struct {
 
 // ComparePassword 对比密码是否匹配
 func (user *User) ComparePassword(_password string) bool {
+	fmt.Println("_password = " + _password)
+	fmt.Println("user_password = " + user.Password)
 	return password.CheckHash(_password, user.Password)
 }
 
