@@ -26,13 +26,14 @@ type ArticlesController struct {
 // Index 文章列表页
 func (ac *ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 	// 获取结果集
-	_articles, err := article.GetAll()
+	_articles, pagerData, err := article.GetAll(r, 2)
 
 	if err != nil {
 		ac.ResponseForSQLError(w, err, "", "")
 	} else {
 		view.Render(w, view.D{
-			"Articles": _articles,
+			"Articles":  _articles,
+			"PagerData": pagerData,
 		}, "articles.index")
 	}
 }
