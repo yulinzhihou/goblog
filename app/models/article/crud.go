@@ -1,4 +1,4 @@
-// article
+// Crud 文章增删改查
 // Author : Yulinzhihou
 // Github : https://github.com/yulinzhihou
 // WebSite: yulinzhihou.com
@@ -62,7 +62,7 @@ func (article *Article) Delete() (rowsAffected int64, err error) {
 }
 
 // GetByUserID 通过 user_id 获取用户所有的文章
-func (article *Article) GetByUserID(uid string) ([]Article, error) {
+func GetByUserID(uid string) ([]Article, error) {
 	var articles []Article
 	if err := model.DB.Where("user_id = ?", uid).Preload("User").Find(&articles).Error; err != nil {
 		return articles, err

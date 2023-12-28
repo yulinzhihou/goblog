@@ -1,4 +1,4 @@
-// article
+// Article 文章模型
 // Author : Yulinzhihou
 // Github : https://github.com/yulinzhihou
 // WebSite: yulinzhihou.com

@@ -7,36 +7,29 @@
 package controllers
 
 import (
-	"errors"
 	"net/http"
 	"strconv"
 
-	"gorm.io/gorm"
 	"myblog/app/models/article"
 	"myblog/app/policies"
 	"myblog/app/requests"
 	"myblog/pkg/flash"
-	"myblog/pkg/logger"
 	"myblog/pkg/route"
 	"myblog/pkg/view"
 )
 
 // ArticlesController 文章相关页面
 type ArticlesController struct {
+	BaseController
 }
 
 // Index 文章列表页
-func (*ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
+func (ac *ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 	// 获取结果集
 	_articles, err := article.GetAll()
 
 	if err != nil {
-		// 数据库错误
-		logger.LogError(err)
-		w.WriteHeader(http.StatusInternalServerError)
-		view.RenderSimple(w, view.D{
-			"Message": "服务器内部错误",
-		}, "errors.50x")
+		ac.ResponseForSQLError(w, err, "", "")
 	} else {
 		view.Render(w, view.D{
 			"Articles": _articles,
@@ -83,24 +76,14 @@ func (*ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
 }
 
 // Show 文章详情页面
-func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
+func (ac *ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 	// 获取 URL 参数
 	id := route.GetRouteVariable("id", r)
 	// 获取文章数据
 	_article, err := article.Get(id)
 	// 如果出现错误
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			w.WriteHeader(http.StatusNotFound)
-			view.RenderSimple(w, view.D{
-				"Message": "文章记录未找到",
-			}, "errors.404")
-		} else {
-			w.WriteHeader(http.StatusInternalServerError)
-			view.RenderSimple(w, view.D{
-				"Message": "服务器内部错误",
-			}, "errors.50x")
-		}
+		ac.ResponseForSQLError(w, err, "", "")
 	} else {
 		// 读取成功。
 		view.Render(w, view.D{
@@ -111,7 +94,7 @@ func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 }
 
 // Edit 文章编辑页面
-func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
+func (ac *ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 	// 获取 URL 参数
 	id := route.GetRouteVariable("id", r)
 	// 获取对应文章数据
@@ -119,19 +102,10 @@ func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 
 	// 如果出现错误
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			view.Render(w, view.D{
-				"Article": _article,
-			}, "errors.404")
-		} else {
-			view.Render(w, view.D{
-				"Article": _article,
-			}, "errors.50x")
-		}
+		ac.ResponseForSQLError(w, err, "", "")
 	} else {
 		if !policies.CanModifyArticle(_article) {
-			flash.Warning("你没有权限操作！")
-			http.Redirect(w, r, "/", http.StatusFound)
+			ac.ResponseForUnauthorized(w, r)
 		} else {
 			view.Render(w, view.D{
 				"Article": _article,
@@ -141,28 +115,17 @@ func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 }
 
 // Update 文章修改
-func (*ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
+func (ac *ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 	// 获取 URL 参数
 	id := route.GetRouteVariable("id", r)
 	// 获取对应文章数据
 	_article, err := article.Get(id)
 	// 判断是否有错误
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			w.WriteHeader(http.StatusNotFound)
-			view.RenderSimple(w, view.D{
-				"Message": "文章未找到",
-			}, "errors.404")
-		} else {
-			w.WriteHeader(http.StatusInternalServerError)
-			view.RenderSimple(w, view.D{
-				"Message": "服务器内部错误",
-			}, "errors.50x")
-		}
+		ac.ResponseForSQLError(w, err, "", "")
 	} else {
 		if !policies.CanModifyArticle(_article) {
-			flash.Warning("你没有权限操作！")
-			http.Redirect(w, r, "/", http.StatusFound)
+			ac.ResponseForUnauthorized(w, r)
 		} else {
 			// 未出现错误
 			_article1 := article.Article{
@@ -202,28 +165,17 @@ func (*ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 }
 
 // Delete 文章删除
-func (*ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
+func (ac *ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
 	// 获取 URL 参数
 	id := route.GetRouteVariable("id", r)
 	// 读取对应的文章数据
 	_article, err := article.Get(id)
 
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			w.WriteHeader(http.StatusNotFound)
-			view.RenderSimple(w, view.D{
-				"Message": "文章未找到",
-			}, "errors.404")
-		} else {
-			w.WriteHeader(http.StatusInternalServerError)
-			view.RenderSimple(w, view.D{
-				"Message": "服务器内部错误",
-			}, "errors.50x")
-		}
+		ac.ResponseForSQLError(w, err, "", "")
 	} else {
 		if !policies.CanModifyArticle(_article) {
-			flash.Warning("你没有权限进行此操作")
-			http.Redirect(w, r, "/", http.StatusFound)
+			ac.ResponseForUnauthorized(w, r)
 		} else {
 			// 未出现错误，进行删除操作
 			rowsAffected, err1 := _article.Delete()
