@@ -13,6 +13,7 @@ import (
 
 	"gorm.io/gorm"
 	"myblog/app/models/article"
+	"myblog/app/policies"
 	"myblog/app/requests"
 	"myblog/pkg/flash"
 	"myblog/pkg/logger"
@@ -103,7 +104,8 @@ func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 	} else {
 		// 读取成功。
 		view.Render(w, view.D{
-			"Articles": _article,
+			"Article":          _article,
+			"CanModifyArticle": policies.CanModifyArticle(_article),
 		}, "articles.show")
 	}
 }
@@ -127,9 +129,14 @@ func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 			}, "errors.50x")
 		}
 	} else {
-		view.Render(w, view.D{
-			"Article": _article,
-		}, "articles.edit", "articles._form_slide", "articles._form_field")
+		if !policies.CanModifyArticle(_article) {
+			flash.Warning("你没有权限操作！")
+			http.Redirect(w, r, "/", http.StatusFound)
+		} else {
+			view.Render(w, view.D{
+				"Article": _article,
+			}, "articles.edit", "articles._form_slide", "articles._form_field")
+		}
 	}
 }
 
@@ -153,38 +160,43 @@ func (*ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 			}, "errors.50x")
 		}
 	} else {
-		// 未出现错误
-		_article1 := article.Article{
-			Title:   r.PostFormValue("title"),
-			Content: r.PostFormValue("content"),
-		}
-
-		errs := requests.ValidateArticleForm(_article1)
-
-		if len(errs) == 0 {
-
-			rowsAffected, err1 := _article.Update()
-
-			if err1 != nil {
-				// 数据库错误
-				w.WriteHeader(http.StatusInternalServerError)
-				view.RenderSimple(w, view.D{
-					"Message": "服务器内部错误",
-				}, "errors.50x")
-				return
-			}
-
-			// 表示更新成功
-			if rowsAffected > 0 {
-				showURL := route.Name2URL("articles.show", "id", id)
-				http.Redirect(w, r, showURL, http.StatusFound)
-			}
+		if !policies.CanModifyArticle(_article) {
+			flash.Warning("你没有权限操作！")
+			http.Redirect(w, r, "/", http.StatusFound)
 		} else {
-			// 表示表单验证不通过 ，显示错误信息
-			view.Render(w, view.D{
-				"Article": _article,
-				"Errors":  errs,
-			}, "articles.edit")
+			// 未出现错误
+			_article1 := article.Article{
+				Title:   r.PostFormValue("title"),
+				Content: r.PostFormValue("content"),
+			}
+
+			errs := requests.ValidateArticleForm(_article1)
+
+			if len(errs) == 0 {
+
+				rowsAffected, err1 := _article.Update()
+
+				if err1 != nil {
+					// 数据库错误
+					w.WriteHeader(http.StatusInternalServerError)
+					view.RenderSimple(w, view.D{
+						"Message": "服务器内部错误",
+					}, "errors.50x")
+					return
+				}
+
+				// 表示更新成功
+				if rowsAffected > 0 {
+					showURL := route.Name2URL("articles.show", "id", id)
+					http.Redirect(w, r, showURL, http.StatusFound)
+				}
+			} else {
+				// 表示表单验证不通过 ，显示错误信息
+				view.Render(w, view.D{
+					"Article": _article,
+					"Errors":  errs,
+				}, "articles.edit")
+			}
 		}
 	}
 }
@@ -209,26 +221,32 @@ func (*ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
 			}, "errors.50x")
 		}
 	} else {
-		// 未出现错误，进行删除操作
-		rowsAffected, err1 := _article.Delete()
-		// 是否发生错误
-		if err1 != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			view.RenderSimple(w, view.D{
-				"Message": "服务器内部错误",
-			}, "errors.50x")
+		if !policies.CanModifyArticle(_article) {
+			flash.Warning("你没有权限进行此操作")
+			http.Redirect(w, r, "/", http.StatusFound)
 		} else {
-			// 未发生错误
-			if rowsAffected > 0 {
-				// 删除成功，跳转
-				indexURL := route.Name2URL("articles.index")
-				http.Redirect(w, r, indexURL, http.StatusFound)
-			} else {
-				w.WriteHeader(http.StatusNotFound)
+			// 未出现错误，进行删除操作
+			rowsAffected, err1 := _article.Delete()
+			// 是否发生错误
+			if err1 != nil {
+				w.WriteHeader(http.StatusInternalServerError)
 				view.RenderSimple(w, view.D{
-					"Message": "文章未找到",
-				}, "errors.404")
+					"Message": "服务器内部错误",
+				}, "errors.50x")
+			} else {
+				// 未发生错误
+				if rowsAffected > 0 {
+					// 删除成功，跳转
+					indexURL := route.Name2URL("articles.index")
+					http.Redirect(w, r, indexURL, http.StatusFound)
+				} else {
+					w.WriteHeader(http.StatusNotFound)
+					view.RenderSimple(w, view.D{
+						"Message": "文章未找到",
+					}, "errors.404")
+				}
 			}
 		}
+
 	}
 }
