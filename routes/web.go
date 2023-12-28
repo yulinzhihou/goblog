@@ -46,6 +46,10 @@ func RegisterWebRoutes(r *mux.Router) {
 	r.HandleFunc("/auth/do_send_email", middlewares.Guest(auc.DoSendEmail)).Methods("POST").Name("auth.do_send_email")
 	r.HandleFunc("/auth/logout", middlewares.Auth(auc.Logout)).Methods("POST").Name("auth.logout")
 
+	// 用户相关
+	uc := new(controllers.UserController)
+	r.HandleFunc("/users/{id:[0-9]+}", middlewares.Auth(uc.Show)).Methods("GET").Name("users.show")
+
 	// 静态资源
 	r.PathPrefix("/assets/").Handler(http.FileServer(http.Dir("./public")))
 
