@@ -22,11 +22,16 @@ type Article struct {
 	Brief   string    `gorm:"type:varchar(255);not null;default:'';comment:简介" valid:"brief"`
 	Content string    `gorm:"type:longtext;comment:内容" valid:"content"`
 	Status  uint8     `gorm:"type:tinyint unsigned;true;not null;default:0;comment:状态0=草稿1=已发布2=未发布" valid:"status"`
-	UserID  uint64    `gorm:"type:bigint unsigned;not null;unsigned;comment:用户ID" valid:"user_id"`
+	UserID  uint64    `gorm:"type:bigint unsigned;not null;index;comment:用户ID" valid:"user_id"`
 	User    user.User `gorm:"-"`
 }
 
 // Link 方法用来生成文章链接
 func (article Article) Link() string {
 	return route.Name2URL("article.show", "id", strconv.FormatUint(article.ID, 10))
+}
+
+// CreatedAtDate 创建日期格式化
+func (article Article) CreatedAtDate() string {
+	return article.CreatedAt.Format("2023-12-21")
 }
