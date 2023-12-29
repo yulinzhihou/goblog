@@ -24,37 +24,70 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav navbar-nav-scroll mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ RouteName2URL "home" }}">首页</a>
+                            <a class="nav-link" href="{{ RouteName2URL "home" }}"><i class="bi bi-house-fill"></i> 首页</a>
                         </li>
                         <!-- Nav item 3 Post -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">文章 </a>
+                            <a class="nav-link dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa-solid fa-layer-group"></i> 文章
+                            </a>
                             <ul class="dropdown-menu" aria-labelledby="postMenu">
                                 <li>
-                                    <a class="dropdown-item" href="{{ RouteName2URL "articles.index" }}">所有文章</a>
+                                    <a class="dropdown-item" href="{{ RouteName2URL "articles.index" }}">
+                                        <i class="fa-solid fa-book"></i> 所有文章
+                                    </a>
                                 </li>
 
                                 <!-- dropdown submenu open left -->
                                 <li class="dropdown-submenu dropstart">
-                                    <a class="dropdown-item dropdown-toggle" href="#">开发</a>
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        <i class="fa-brands fa-dev"></i> 开发
+                                    </a>
                                     <ul class="dropdown-menu dropdown-menu-end" data-bs-popper="none">
-                                        <li><a class="dropdown-item" href="#">PHP</a></li>
-                                        <li><a class="dropdown-item" href="#">Shell</a></li>
-                                        <li><a class="dropdown-item" href="#">Lua</a></li>
-                                        <li><a class="dropdown-item" href="#">Go</a></li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fa-brands fa-php"></i> PHP
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fa-solid fa-terminal"></i> Shell
+                                            </a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">
+                                                <i class="fa-solid fa-scroll"></i> Lua
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fa-brands fa-golang me-2"></i> Go
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li class="dropdown-submenu dropstart">
-                                    <a class="dropdown-item dropdown-toggle" href="#">运维</a>
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        <i class="fa-solid fa-screwdriver-wrench"></i> 运维
+                                    </a>
                                     <ul class="dropdown-menu dropdown-menu-end" data-bs-popper="none">
-                                        <li><a class="dropdown-item" href="#">Linux</a></li>
-                                        <li><a class="dropdown-item" href="#">Docker</a></li>
+                                        <li>
+                                            <a class="dropdown-item" href="#"><i class="fa-brands fa-linux"></i> Linux</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#"><i class="fa-brands fa-docker"></i> Docker</a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li class="dropdown-submenu dropstart">
-                                    <a class="dropdown-item dropdown-toggle" href="#">游戏</a>
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        <i class="fa-brands fa-steam-symbol"></i> 游戏
+                                    </a>
                                     <ul class="dropdown-menu dropdown-menu-end" data-bs-popper="none">
-                                        <li><a class="dropdown-item" href="#">天龙八部</a></li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fa-brands fa-d-and-d"></i> 天龙八部
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -62,10 +95,10 @@
                         <!-- Nav item 4 Mega menu -->
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ RouteName2URL "about" }}">关于我</a>
+                            <a class="nav-link" href="{{ RouteName2URL "about" }}"><i class="fa-regular fa-circle-question"></i> 关于我</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ RouteName2URL "help" }}">帮助</a>
+                            <a class="nav-link" href="{{ RouteName2URL "help" }}"><i class="fa-solid fa-circle-info"></i> 帮助</a>
                         </li>
                     </ul>
                 </div>
@@ -73,12 +106,12 @@
                 <!-- Nav right START -->
                 <ul class="nav flex-nowrap align-items-center ms-sm-3 list-unstyled">
                     <li class="nav-item ms-2">
-                        <a class="nav-link bg-light icon-md btn btn-light p-0" href="messaging.html">
+                        <a class="nav-link bg-light icon-md btn btn-light p-0" href="#">
                             <i class="bi bi-chat-left-text-fill fs-6"> </i>
                         </a>
                     </li>
                     <li class="nav-item ms-2">
-                        <a class="nav-link bg-light icon-md btn btn-light p-0" href="settings.html">
+                        <a class="nav-link bg-light icon-md btn btn-light p-0" href="#">
                             <i class="bi bi-gear-fill fs-6"> </i>
                         </a>
                     </li>
