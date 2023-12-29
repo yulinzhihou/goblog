@@ -67,7 +67,7 @@ func (cc *CategoriesController) Store(w http.ResponseWriter, r *http.Request) {
 		// 创建文章分类
 		err := _category.Store()
 		// 根据返回的 ID
-		if err != nil && _category.ID > 0 {
+		if err == nil && _category.ID > 0 {
 			flash.Success("创建成功")
 			indexURL := route.Name2URL("home")
 			http.Redirect(w, r, indexURL, http.StatusFound)
