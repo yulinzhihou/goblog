@@ -13,6 +13,7 @@ import (
 	"myblog/app/models/article"
 	"myblog/app/models/category"
 	"myblog/app/requests"
+	"myblog/pkg/auth"
 	"myblog/pkg/flash"
 	"myblog/pkg/route"
 	"myblog/pkg/view"
@@ -68,8 +69,8 @@ func (cc *CategoriesController) Store(w http.ResponseWriter, r *http.Request) {
 		err := _category.Store()
 		// 根据返回的 ID
 		if err == nil && _category.ID > 0 {
-			flash.Success("创建成功")
-			indexURL := route.Name2URL("home")
+			flash.Success("新增分类成功")
+			indexURL := route.Name2URL("users.show", "id", auth.User().GetStringID())
 			http.Redirect(w, r, indexURL, http.StatusFound)
 		} else {
 			cc.ResponseForSQLError(w, err, "", "创建文章分类失败，请联系管理员")
