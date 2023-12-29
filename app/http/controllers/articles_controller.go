@@ -42,7 +42,7 @@ func (ac *ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 func (*ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
 	view.Render(w, view.D{
 		"Articles": nil,
-	}, "articles.create", "articles._form_slide", "articles._form_field")
+	}, "articles.create", "articles._form_field")
 }
 
 // Store 文章新增
@@ -69,7 +69,7 @@ func (ac *ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
 		view.Render(w, view.D{
 			"Article": _article,
 			"Errors":  errs,
-		}, "articles.create", "articles._form_field", "articles._form_slide")
+		}, "articles.create", "articles._form_field")
 	}
 }
 
