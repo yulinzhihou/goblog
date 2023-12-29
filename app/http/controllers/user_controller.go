@@ -42,3 +42,8 @@ func (uc *UserController) Show(w http.ResponseWriter, r *http.Request) {
 		// }
 	}
 }
+
+// Update 用户基础资料更新，不包括密码
+func (uc *UserController) Update(w http.ResponseWriter, r *http.Request) {
+	//
+}

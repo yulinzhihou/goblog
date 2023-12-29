@@ -49,6 +49,7 @@ func RegisterWebRoutes(r *mux.Router) {
 	// 用户相关
 	uc := new(controllers.UserController)
 	r.HandleFunc("/users/{id:[0-9]+}", middlewares.Auth(uc.Show)).Methods("GET").Name("users.show")
+	r.HandleFunc("/users/{id:[0-9]+}", middlewares.Auth(uc.Update)).Methods("POST").Name("users.update")
 
 	// 分类相关
 	cc := new(controllers.CategoriesController)
