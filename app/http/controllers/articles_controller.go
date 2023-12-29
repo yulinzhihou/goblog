@@ -14,6 +14,7 @@ import (
 	"myblog/app/models/category"
 	"myblog/app/policies"
 	"myblog/app/requests"
+	"myblog/pkg/auth"
 	"myblog/pkg/flash"
 	"myblog/pkg/route"
 	"myblog/pkg/view"
@@ -52,9 +53,14 @@ func (ac *ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
 
 // Store 文章新增
 func (ac *ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
+	// 初始化数据
+	currentUser := auth.User()
+
 	_article := article.Article{
 		Title:   r.PostFormValue("title"),
 		Content: r.PostFormValue("content"),
+		Brief:   r.PostFormValue("brief"),
+		UserID:  currentUser.ID,
 	}
 
 	// 验证器开始验证

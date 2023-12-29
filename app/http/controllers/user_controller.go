@@ -7,9 +7,9 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
-	"myblog/app/models/article"
 	"myblog/app/models/user"
 	"myblog/pkg/route"
 	"myblog/pkg/view"
@@ -26,19 +26,19 @@ func (uc *UserController) Show(w http.ResponseWriter, r *http.Request) {
 	id := route.GetRouteVariable("id", r)
 	// 获取对应的文章数据
 	_user, err := user.Get(id)
-
+	fmt.Println(_user)
+	fmt.Println(err)
 	if err != nil {
 		uc.ResponseForSQLError(w, err, "", "")
 	} else {
 		// 读取成功，显示用户所有的文章
-		articles, err1 := article.GetByUserID(_user.GetStringID())
-		if err1 != nil {
-			uc.ResponseForSQLError(w, err, "", "")
-			return
-		} else {
-			view.Render(w, view.D{
-				"Articles": articles,
-			}, "articles.index")
-		}
+		// articles, err1 := article.GetByUserID(_user.GetStringID())
+		// if err1 != nil {
+		// 	uc.ResponseForSQLError(w, err, "", "")
+		// } else {
+		view.Render(w, view.D{
+			"User": _user,
+		}, "users.show")
+		// }
 	}
 }

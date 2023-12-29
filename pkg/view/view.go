@@ -38,7 +38,8 @@ func RenderSimple(w io.Writer, data D, tplFiles ...string) {
 func RenderTemplate(w io.Writer, name string, data D, tplFiles ...string) {
 	// 通用模板数据
 	data["isLogined"] = auth.Check()
-	data["loginUser"] = auth.User
+	data["loginUser"] = auth.User()
+	data["user_id"] = auth.User().GetStringID()
 	data["flash"] = flash.All()
 	data["Users"], _ = user.All()
 	data["Categories"], _ = category.All()
