@@ -11,6 +11,7 @@ import (
 	"strconv"
 
 	"myblog/app/models/article"
+	"myblog/app/models/category"
 	"myblog/app/policies"
 	"myblog/app/requests"
 	"myblog/pkg/flash"
@@ -39,9 +40,13 @@ func (ac *ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 }
 
 // Create 文章创建表单页面
-func (*ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
+func (ac *ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
+	// 查询分类数据
+	_category, _ := category.All()
+
 	view.Render(w, view.D{
-		"Articles": nil,
+		"Articles":   nil,
+		"Categories": _category,
 	}, "articles.create", "articles._form_field")
 }
 
