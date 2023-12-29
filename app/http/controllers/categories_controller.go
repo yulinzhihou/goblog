@@ -49,7 +49,7 @@ func (cc CategoriesController) Show(w http.ResponseWriter, r *http.Request) {
 
 // Create 文章分类创建
 func (cc CategoriesController) Create(w http.ResponseWriter, r *http.Request) {
-	view.Render(w, view.D{}, "categories.create")
+	view.Render(w, view.D{}, "categories.create", "categories._form_field", "categories._form_slide")
 }
 
 // Store 文章分类保存
@@ -60,7 +60,6 @@ func (cc *CategoriesController) Store(w http.ResponseWriter, r *http.Request) {
 		Desc: r.PostFormValue("desc"),
 		Sort: cast.ToInt(r.PostFormValue("sort")),
 	}
-
 	// 表单验证
 	errs := requests.ValidateCategoryForm(_category)
 	// 开始判断是否通过验证
@@ -72,7 +71,6 @@ func (cc *CategoriesController) Store(w http.ResponseWriter, r *http.Request) {
 			flash.Success("创建成功")
 			indexURL := route.Name2URL("home")
 			http.Redirect(w, r, indexURL, http.StatusFound)
-
 		} else {
 			cc.ResponseForSQLError(w, err, "", "创建文章分类失败，请联系管理员")
 		}
@@ -80,6 +78,6 @@ func (cc *CategoriesController) Store(w http.ResponseWriter, r *http.Request) {
 		view.Render(w, view.D{
 			"Category": _category,
 			"Errors":   errs,
-		}, "categories.create")
+		}, "categories.create", "categories._form_field", "categories._form_slide")
 	}
 }

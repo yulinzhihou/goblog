@@ -234,7 +234,11 @@
                     <!-- SVG END -->
                     <!-- 404 info -->
                     <h1 class="display-1 mt-4">404</h1>
-                    <h2 class="mb-2 h1">页面数据未找到</h2>
+                    {{ if .Message }}
+                        <h2 class="mb-2 h1">{{ .Message }}</h2>
+                    {{else}}
+                        <h2 class="mb-2 h1">页面数据未找到</h2>
+                    {{end}}
                     <p>可能你要的页面已经被外星人拿走了！</p>
                     <!-- Button -->
                     <a class="btn btn-primary-soft btn-sm" href="javascript:history.go(-1)">返回</a>

@@ -46,7 +46,7 @@ func init() {
 		valLength := utf8.RuneCountInString(value.(string))
 		// 去除验证字段前缀，获取验证字段的值
 		l, _ := strconv.Atoi(strings.TrimPrefix(rule, "max_cn:"))
-		if valLength < l {
+		if valLength > l {
 			if message != "" {
 				return errors.New(message)
 			}

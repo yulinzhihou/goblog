@@ -7,6 +7,8 @@
 package password
 
 import (
+	"fmt"
+
 	"golang.org/x/crypto/bcrypt"
 	"myblog/pkg/logger"
 )
@@ -24,6 +26,7 @@ func Hash(password string) string {
 func CheckHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	logger.LogError(err)
+	fmt.Print(err == nil)
 	return err == nil
 }
 

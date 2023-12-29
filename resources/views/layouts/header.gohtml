@@ -22,7 +22,6 @@
 
                 <!-- Main navbar START -->
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-
                     <ul class="navbar-nav navbar-nav-scroll mx-auto">
                         <!-- Nav item 1 Demos -->
                         <li class="nav-item dropdown">
@@ -97,7 +96,6 @@
                                 </li>
                             </ul>
                         </li>
-
                         <!-- Nav item 3 Post -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account </a>
@@ -130,10 +128,18 @@
                                 <li><a class="dropdown-item" href="privacy-and-terms.html">Privacy & terms</a></li>
                             </ul>
                         </li>
-
                         <!-- Nav item 4 Mega menu -->
                         <li class="nav-item">
-                            <a class="nav-link" href="my-profile-connections.html">My network</a>
+                            <a class="nav-link" href="{{ RouteName2URL "home" }}">首页</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ RouteName2URL "articles.index" }}">文章</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ RouteName2URL "about" }}">关于我</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ RouteName2URL "help" }}">帮助</a>
                         </li>
                     </ul>
                 </div>

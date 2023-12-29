@@ -4,19 +4,28 @@
             <!-- Page information -->
             <div class="col-12">
                 <label for="title" class="form-label">名称 </label>
-                <input type="text" name="name" class="form-control" placeholder="分类名称 (必填)">
+                <input type="text" name="name" class="form-control {{if .Errors.name }} is-invalid {{end}}" placeholder="分类名称 (必填)">
             </div>
+            {{ with .Errors.name }}
+                {{template "invalid-feedback" .}}
+            {{end}}
             <!-- Display name -->
             <div class="col-12">
                 <label for="brief" class="form-label">描述 </label>
-                <input type="text" name="desc" class="form-control" placeholder="分类描述 (必填)">
+                <input type="text" name="desc" class="form-control {{if .Errors.desc }} is-invalid {{end}}" placeholder="分类描述 (必填)">
             </div>
+            {{ with .Errors.desc }}
+                {{template "invalid-feedback" .}}
+            {{end}}
 
             <!-- 排序 -->
             <div class="col-12">
                 <label for="sort" class="form-label">排序</label>
-                <input type="range" class="form-range" min="0" max="999" step="1" id="sort" name="sort">
+                <input type="range" class="form-range {{if .Errors.sort }} is-invalid {{end}}" min="0" max="999" step="1" id="sort" name="sort">
             </div>
+            {{ with .Errors.sort }}
+                {{template "invalid-feedback" .}}
+            {{end}}
 
             <!-- Divider -->
             <hr>

@@ -19,25 +19,20 @@
                             <!-- Email -->
                             <div class="mb-3 input-group-lg">
                                 <input type="email" class="form-control" name="email" placeholder="邮箱地址" value="{{ .User.Email }}">
-                                {{ with .Error }}
-                                    <div class="invalid-feedback" style="display: block;">
-                                        <p>{{ . }}</p>
-                                    </div>
-                                {{end}}
                             </div>
                             <!-- New password -->
                             <div class="mb-3 position-relative">
                                 <!-- Password -->
                                 <div class="input-group input-group-lg">
                                     <input class="form-control fakepassword" type="password" id="psw-input" name="password" placeholder="输入密码" value="{{ .User.Password}}">
+                                    <span class="input-group-text p-0">
+                                        <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
+                                    </span>
                                     {{ with .Error }}
                                         <div class="invalid-feedback" style="display: block;">
                                             <p>{{ . }}</p>
                                         </div>
                                     {{end}}
-                                    <span class="input-group-text p-0">
-                                        <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
-                                    </span>
                                 </div>
                             </div>
                             <!-- Remember me -->

@@ -41,6 +41,7 @@ func (auc *AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 		Email:           r.PostFormValue("email"),
 		Password:        r.PostFormValue("password"),
 		PasswordConfirm: r.PostFormValue("password_confirm"),
+		Desc:            "[]",
 	}
 
 	// 开始验证
@@ -132,6 +133,7 @@ func (auc *AuthController) ResetPassword(w http.ResponseWriter, r *http.Request)
 		_user1 := user.User{
 			Password:        r.PostFormValue("password"),
 			PasswordConfirm: r.PostFormValue("password_confirm"),
+			Desc:            "[]",
 		}
 		errs := requests.ValidateResetPasswordFormData(_user1)
 		if len(errs) == 0 {
