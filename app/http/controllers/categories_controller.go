@@ -49,7 +49,7 @@ func (cc CategoriesController) Show(w http.ResponseWriter, r *http.Request) {
 
 // Create 文章分类创建
 func (cc CategoriesController) Create(w http.ResponseWriter, r *http.Request) {
-	view.Render(w, view.D{}, "categories.create", "categories._form_field", "categories._form_slide")
+	view.Render(w, view.D{}, "categories.create", "categories._form_field")
 }
 
 // Store 文章分类保存
