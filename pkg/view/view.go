@@ -11,6 +11,7 @@ import (
 	"io"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"myblog/app/models/category"
 	"myblog/app/models/user"
@@ -48,6 +49,7 @@ func RenderTemplate(w io.Writer, name string, data D, tplFiles ...string) {
 	// 解析所有模板文件
 	tmpl, err := template.New("").Funcs(template.FuncMap{
 		"RouteName2URL": route.Name2URL,
+		"now":           time.Now,
 	}).ParseFiles(allFiles...)
 
 	logger.LogError(err)
