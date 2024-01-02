@@ -30,7 +30,7 @@ func Get(idStr string) (Article, error) {
 func GetAll(r *http.Request, perPage int) ([]Article, pagination.ViewData, error) {
 	// 初始化分页实例
 	db := model.DB.Model(Article{}).Order("created_at desc")
-	_pager := pagination.New(r, db, route.Name2URL("home"), perPage)
+	_pager := pagination.New(r, db, route.Name2URL("articles.index"), perPage)
 
 	// 获取实图数据
 	viewData := _pager.Paging()

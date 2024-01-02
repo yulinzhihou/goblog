@@ -32,6 +32,7 @@ func (ac *ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 	// 获取结果集
 	_articles, pagerData, err := article.GetAll(r, 2)
 
+	fmt.Println(pagerData)
 	if err != nil {
 		ac.ResponseForSQLError(w, err, "", "")
 	} else {

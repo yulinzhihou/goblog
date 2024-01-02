@@ -29,7 +29,7 @@ type Article struct {
 }
 
 // Link 方法用来生成文章链接
-func (article Article) Link() string {
+func (article *Article) Link() string {
 	return route.Name2URL("article.show", "id", types.Uint64ToString(article.ID))
 }
 

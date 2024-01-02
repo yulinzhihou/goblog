@@ -1,19 +1,36 @@
 {{define "pagination"}}
     <!-- Pagination -->
     <div class="mt-4">
+    {{if .HasPages}}
         <nav aria-label="navigation">
             <ul class="pagination pagination-light d-inline-block d-md-flex justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">上一页</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-                <li class="page-item"><a class="page-link" href="#">15</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">下一页</a>
-                </li>
+                {{if .HasPrev}}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ .Prev.URL }}">上一页</a>
+                    </li>
+                {{else}}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">上一页</a>
+                    </li>
+                {{end}}
+
+
+                {{/*                <li class="page-item"><a class="page-link" href="#">2</a></li>*/}}
+                {{/*                <li class="page-item active"><a class="page-link" href="#">1</a></li>*/}}
+                {{/*                <li class="page-item disabled"><a class="page-link" href="#">...</a></li>*/}}
+                {{/*                <li class="page-item"><a class="page-link" href="#">15</a></li>*/}}
+
+                {{if .HasNext }}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ .Next.URL }}">下一页</a>
+                    </li>
+                {{else}}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">下一页</a>
+                    </li>
+                {{end}}
             </ul>
         </nav>
-    </div>
+        </div>
+    {{end}}
 {{end}}
