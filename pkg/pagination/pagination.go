@@ -23,7 +23,7 @@ type Page struct {
 	// 链接
 	URL string
 	// 页码
-	Number int64
+	Number int
 }
 
 // ViewData 同视图渲染的数据
@@ -45,14 +45,14 @@ type ViewData struct {
 	// 数据库内容总数量
 	TotalCount int64
 	// 总页数
-	TotalPage int64
+	TotalPage int
 }
 
 // Pagination 分页对象
 type Pagination struct {
 	BaseURL string
-	PerPage int64
-	Page    int64
+	PerPage int
+	Page    int
 	Count   int64
 	db      *gorm.DB
 }
@@ -62,10 +62,10 @@ type Pagination struct {
 // db -- gorm 查询句柄，用来查询数据集和获取数据总数
 // BaseURL 用来查询分页链接
 // PerPage 每页条数，传参数小于或等于 0 时默认值为 10， 可以通过 config/pagination.go 修改
-func New(r *http.Request, db *gorm.DB, baseURL string, PerPage int64) *Pagination {
+func New(r *http.Request, db *gorm.DB, baseURL string, PerPage int) *Pagination {
 	// 默认每页数量
 	if PerPage <= 0 {
-		PerPage = config.GetInt64("pagination.perpage")
+		PerPage = config.GetInt("pagination.per_page")
 	}
 
 	// 实例对象
@@ -104,15 +104,15 @@ func (p *Pagination) Paging() ViewData {
 }
 
 // NewPage 设置当前页面
-func (p Pagination) NewPage(page int64) Page {
+func (p Pagination) NewPage(page int) Page {
 	return Page{
 		Number: page,
-		URL:    p.BaseURL + strconv.Itoa(int(page)),
+		URL:    p.BaseURL + strconv.Itoa(page),
 	}
 }
 
 // SetPage 设置当前页
-func (p *Pagination) SetPage(page int64) {
+func (p *Pagination) SetPage(page int) {
 	// 当当前页码少于或者等于0的时候，强制赋值为 1
 	if page <= 0 {
 		page = 1
@@ -122,7 +122,7 @@ func (p *Pagination) SetPage(page int64) {
 }
 
 // CurrentPage 返回当前页码
-func (p Pagination) CurrentPage() int64 {
+func (p Pagination) CurrentPage() int {
 	totalPage := p.TotalPage()
 	// 如果总页数为 0，则当前页面为0
 	if totalPage == 0 {
@@ -148,10 +148,10 @@ func (p Pagination) Results(data interface{}) error {
 	}
 
 	if page > 1 {
-		offset = int((page - 1) * p.PerPage)
+		offset = (page - 1) * p.PerPage
 	}
 
-	return p.db.Preload(clause.Associations).Limit(int(p.PerPage)).Offset(offset).Find(data).Error
+	return p.db.Preload(clause.Associations).Limit(p.PerPage).Offset(offset).Find(data).Error
 }
 
 // TotalCount 返回的是数据库里面的条数
@@ -175,7 +175,7 @@ func (p *Pagination) HasPages() bool {
 
 // HasNext 返回当前页面是否是最后一页
 func (p Pagination) HasNext() bool {
-	totalPage := p.TotalCount()
+	totalPage := p.TotalPage()
 	if totalPage == 0 {
 		return false
 	}
@@ -189,7 +189,7 @@ func (p Pagination) HasNext() bool {
 }
 
 // PrevPage 前一页码 ，0意味着这就是第一页
-func (p Pagination) PrevPage() int64 {
+func (p Pagination) PrevPage() int {
 	hasPrev := p.HasPrev()
 
 	if !hasPrev {
@@ -205,7 +205,7 @@ func (p Pagination) PrevPage() int64 {
 }
 
 // NextPage 下一页码。0的话就是最后一页
-func (p Pagination) NextPage() int64 {
+func (p Pagination) NextPage() int {
 	hasNext := p.HasNext()
 
 	if !hasNext {
@@ -231,7 +231,7 @@ func (p Pagination) HasPrev() bool {
 }
 
 // TotalPage 返回总页数
-func (p Pagination) TotalPage() int64 {
+func (p Pagination) TotalPage() int {
 	count := p.TotalCount()
 
 	if count == 0 {
@@ -243,15 +243,15 @@ func (p Pagination) TotalPage() int64 {
 	if nums == 0 {
 		nums = 1
 	}
-	return nums
+	return int(nums)
 }
 
 // GetPageFromRequest 从 URL 中获取 page 参数
-func (p Pagination) GetPageFromRequest(r *http.Request) int64 {
+func (p Pagination) GetPageFromRequest(r *http.Request) int {
 	page := r.URL.Query().Get(config.GetString("pagination.url_query"))
 
 	if len(page) > 0 {
-		pageInt := types.StringToInt64(page)
+		pageInt := types.StringToInt(page)
 		if pageInt <= 0 {
 			return 1
 		}

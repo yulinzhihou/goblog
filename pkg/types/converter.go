@@ -35,6 +35,24 @@ func StringToInt64(idStr string) int64 {
 	return i
 }
 
+// StringToInt 将 string 转换成 int
+func StringToInt(idStr string) int {
+	i, err := strconv.Atoi(idStr)
+	if err != nil {
+		logger.LogError(err)
+	}
+	return i
+}
+
+// IntToString 将 string 转换成 int
+func IntToString(idStr string) int {
+	i, err := strconv.Atoi(idStr)
+	if err != nil {
+		logger.LogError(err)
+	}
+	return i
+}
+
 // Uint64ToString 将 uint64 转换为 string
 func Uint64ToString(num uint64) string {
 	return strconv.FormatUint(num, 10)

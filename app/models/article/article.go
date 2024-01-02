@@ -7,12 +7,11 @@
 package article
 
 import (
-	"strconv"
-
 	"myblog/app/models"
 	"myblog/app/models/category"
 	"myblog/app/models/user"
 	"myblog/pkg/route"
+	"myblog/pkg/types"
 )
 
 // Article 模型
@@ -31,7 +30,7 @@ type Article struct {
 
 // Link 方法用来生成文章链接
 func (article Article) Link() string {
-	return route.Name2URL("article.show", "id", strconv.FormatUint(article.ID, 10))
+	return route.Name2URL("article.show", "id", types.Uint64ToString(article.ID))
 }
 
 // CreatedAtDate 创建日期格式化

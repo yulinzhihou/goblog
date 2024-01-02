@@ -13,8 +13,10 @@ import (
 
 // 定义规则
 var articleRules = govalidator.MapData{
-	"title":   []string{"required", "min_cn:3", "max_cn:60", "not_exists:articles,title"},
-	"content": []string{"required", "min_cn:10"},
+	"title":       []string{"required", "min_cn:3", "max_cn:60", "not_exists:articles,title"},
+	"content":     []string{"required", "min_cn:10"},
+	"category_id": []string{"required"},
+	"user_id":     []string{"min:1"},
 }
 
 // 定义提示
@@ -27,6 +29,12 @@ var articleMessages = govalidator.MapData{
 	"content": []string{
 		"required:文章内容必填",
 		"min_cn:文章内容最小 10 个字",
+	},
+	"category_id": []string{
+		"required:文章分类必选择",
+	},
+	"user_id": []string{
+		"min:用户未登录，请重新登录",
 	},
 }
 

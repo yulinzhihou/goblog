@@ -7,6 +7,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -17,6 +18,7 @@ import (
 	"myblog/pkg/auth"
 	"myblog/pkg/flash"
 	"myblog/pkg/route"
+	"myblog/pkg/types"
 	"myblog/pkg/view"
 )
 
@@ -55,21 +57,24 @@ func (ac *ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
 func (ac *ArticlesController) Store(w http.ResponseWriter, r *http.Request) {
 	// 初始化数据
 	currentUser := auth.User()
+	// 获取分类ID
+	_categoryId := types.StringToUint64(r.PostFormValue("category_id"))
 
 	_article := article.Article{
-		Title:   r.PostFormValue("title"),
-		Content: r.PostFormValue("content"),
-		Brief:   r.PostFormValue("brief"),
-		UserID:  currentUser.ID,
+		Title:      r.PostFormValue("title"),
+		Content:    r.PostFormValue("content"),
+		Brief:      r.PostFormValue("brief"),
+		UserID:     currentUser.ID,
+		CategoryID: _categoryId,
 	}
 
 	// 验证器开始验证
 	errs := requests.ValidateArticleForm(_article)
-
+	fmt.Println(errs)
 	// 检查是否有错误
 	if len(errs) == 0 {
 		err := _article.Create()
-		if err != nil && _article.ID > 0 {
+		if err == nil && _article.ID > 0 {
 			showURL := route.Name2URL("article.index")
 			flash.Success("插入成功，ID 为" + strconv.FormatUint(_article.ID, 10))
 			http.Redirect(w, r, showURL, http.StatusFound)

@@ -17,9 +17,9 @@ import (
 )
 
 // Get 通过 ID 获取文章
-func Get(idstr string) (Article, error) {
+func Get(idStr string) (Article, error) {
 	var article Article
-	id := types.StringToUint64(idstr)
+	id := types.StringToUint64(idStr)
 	if err := model.DB.First(&article, id).Error; err != nil {
 		return article, err
 	}
@@ -27,9 +27,9 @@ func Get(idstr string) (Article, error) {
 }
 
 // GetAll 获取文章列表
-func GetAll(r *http.Request, perPage int64) ([]Article, pagination.ViewData, error) {
+func GetAll(r *http.Request, perPage int) ([]Article, pagination.ViewData, error) {
 	// 初始化分页实例
-	db := model.DB.Find(Article{}).Order("created_at desc")
+	db := model.DB.Model(Article{}).Order("created_at desc")
 	_pager := pagination.New(r, db, route.Name2URL("home"), perPage)
 
 	// 获取实图数据
@@ -85,7 +85,7 @@ func GetByUserID(uid string) ([]Article, error) {
 }
 
 // GetByCategoryID 通过 category_id 获取文章数据
-func GetByCategoryID(categoryId string, r *http.Request, perPage int64) ([]Article, pagination.ViewData, error) {
+func GetByCategoryID(categoryId string, r *http.Request, perPage int) ([]Article, pagination.ViewData, error) {
 	// 初始化分页数据
 	db := model.DB.Model(Article{}).Where("category_id = ?", categoryId).Order("created_at desc")
 	_pager := pagination.New(r, db, route.Name2URL("categories.show", "id", categoryId), perPage)
